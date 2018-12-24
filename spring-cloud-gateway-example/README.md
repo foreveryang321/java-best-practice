@@ -30,12 +30,12 @@ management:
 
 - 动态调整路由规则
     - 刷新路由规则
-    ```bash
+    ```sh
     curl -XPOST http://localhost:8080/actuator/gateway/refresh
     ```
     
     - 新增路由
-    ```bash
+    ```sh
     curl -H 'Content-Type: application/json; charset=UTF-8' -XPOST http://localhost:8080/actuator/gateway/routes/taobao -d '{
             "id": "taobao",
             "predicates": [
@@ -56,7 +56,7 @@ management:
     > 注意：args 的 `_genkey_0` key 命名，filters 也是一样的命名方式，后缀数字按照参数配置顺序递增
     
     - 删除路由
-    ```bash
+    ```sh
     curl -XDELETE http://localhost:8080/actuator/gateway/routes/taobao
     ```
     > 要调用一下`刷新路由规则`接口才会生效
