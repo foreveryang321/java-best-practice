@@ -19,6 +19,7 @@
         <module>sentinel-spring-cloud-example</module>
         <module>spring-cloud-gateway-example</module>
         <module>nacos-spring-cloud-gatewat-example</module>
+        <module>nacos-spring-cloud-example</module>
     </modules>
 
     <properties>

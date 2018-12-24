@@ -15,19 +15,19 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 @EnableNacosConfig
 @NacosPropertySources({
-        @NacosPropertySource(dataId = NacosApp.DATAID)
+        @NacosPropertySource(dataId = NacosBootApp.DATAID)
 })
 @RestController
 @Slf4j
-public class NacosApp {
+public class NacosBootApp {
     static final String DATAID = "nacos-spring-boot-example.properties";
 
     public static void main(String[] args) {
-        SpringApplication.run(NacosApp.class, args);
+        SpringApplication.run(NacosBootApp.class, args);
     }
 
     @NacosConfigListener(
-            dataId = NacosApp.DATAID,
+            dataId = NacosBootApp.DATAID,
             timeout = 500
     )
     public void onChangeListener(String newContent) throws Exception {
