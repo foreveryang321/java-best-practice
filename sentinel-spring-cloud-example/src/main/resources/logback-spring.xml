@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="false" scanPeriod="60 seconds" debug="false">
     <property name="logger.charset" value="UTF-8"/>
-    <property name="logger.path" value="${catalina.home}/logs"/>
+    <property name="logger.path" value="${catalina.home:-./..}/logs"/>
     <property name="logger.pattern" value="%d{yy-MM-dd HH:mm:ss} %p %t %c{2}.%M\\(%L\\) | %m%n"/>
     <property name="logger.maxHistory" value="6"/>
 
