@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="false" scanPeriod="60 seconds" debug="false">
+    <property name="logger.charset" value="UTF-8"/>
+    <property name="logger.path" value="${catalina.home}/logs"/>
+    <property name="logger.pattern" value="%d{yy-MM-dd HH:mm:ss} %p %t %c{2}.%M\\(%L\\) | %m%n"/>
+    <property name="logger.maxHistory" value="6"/>
+
+    <springProfile name="local">
+        <property name="logger.pattern"
+                  value="%d{yy-MM-dd HH:mm:ss} %highlight(%p) %yellow(%t) %cyan(%c.%M\\(%L\\)) | %m%n"/>
+        <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder charset="${logger.charset}">
+                <pattern>${logger.pattern}</pattern>
+            </encoder>
+        </appender>
+        <root level="info">
+            <appender-ref ref="stdout"/>
+        </root>
+    </springProfile>
+    <springProfile name="dev, pro">
+        <appender name="info-file"
+                  class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <File>${logger.path}/info.log</File>
+            <encoder charset="${logger.charset}">
+                <pattern>${logger.pattern}</pattern>
+            </encoder>
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>INFO</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <fileNamePattern>
+                    ${logger.path}/info.log.%d{yy.MM.dd}.%i
+                </fileNamePattern>
+                <maxHistory>${logger.maxHistory}</maxHistory>
+                <maxFileSize>1GB</maxFileSize>
+                <totalSizeCap>5GB</totalSizeCap>
+            </rollingPolicy>
+        </appender>
+        <appender name="warn-file"
+                  class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <encoder charset="${logger.charset}">
+                <pattern>${logger.pattern}</pattern>
+            </encoder>
+            <File>${logger.path}/warn.log</File>
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>WARN</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>
+                    ${logger.path}/warn.log.%d{yy.MM.dd}
+                </fileNamePattern>
+                <maxHistory>${logger.maxHistory}</maxHistory>
+                <totalSizeCap>512MB</totalSizeCap>
+            </rollingPolicy>
+        </appender>
+        <appender name="error-file"
+                  class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <encoder charset="${logger.charset}">
+                <pattern>${logger.pattern}</pattern>
+            </encoder>
+            <File>${logger.path}/error.log</File>
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>ERROR</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <fileNamePattern>
+                    ${logger.path}/error.log.%d{yy.MM.dd}.%i
+                </fileNamePattern>
+                <maxHistory>${logger.maxHistory}</maxHistory>
+                <maxFileSize>1GB</maxFileSize>
+                <totalSizeCap>2GB</totalSizeCap>
+            </rollingPolicy>
+        </appender>
+        <logger name="warn-file" level="WARN"/>
+        <logger name="error-file" level="ERROR"/>
+        <root level="INFO">
+            <appender-ref ref="info-file"/>
+            <appender-ref ref="warn-file"/>
+            <appender-ref ref="error-file"/>
+        </root>
+    </springProfile>
+</configuration>
