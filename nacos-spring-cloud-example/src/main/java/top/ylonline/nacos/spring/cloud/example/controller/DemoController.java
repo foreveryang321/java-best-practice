@@ -18,9 +18,13 @@ public class DemoController {
     private int id;
     @Value("${example.name}")
     private String name;
+    @Value("${example.age}")
+    private int age;
+    @Value("${example.weight}")
+    private String weight;
 
     @GetMapping("/demo")
     public String demo() {
-        return String.format("id: %s, name: %s", id, name);
+        return String.format("id: %s, name: %s, age: %s, weight: %s", id, name, age, weight);
     }
 }

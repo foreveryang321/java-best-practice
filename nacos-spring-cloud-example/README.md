@@ -10,11 +10,17 @@ spring.cloud.nacos.config.server-addr=192.168.56.101:8848
 ```
 > 配置`spring.application.name=nacos-spring-cloud-example`会自动拉取 Nacos 配置中心 data_id：nacos-spring-cloud-example.properties 的配置
 
-- 在 [Nacos](https://nacos.io/zh-cn/) 控制台 public 命名空间下新建 `nacos-spring-cloud-example.properties` 配置
-
+- 在 [Nacos](https://nacos.io/zh-cn/) 控制台 public 命名空间下新建 3 个配置
 ```properties
+# data id: nacos-spring-cloud-example.properties
 example.id=123
 example.name=nacos-spring-cloud-example.properties
+
+# data id: ext-config-default.properties
+example.age=23
+
+# data id: ext-config.properties, group: REFRESH_GROUP
+example.weight=1KG
 ```
 
 - DemoController.java
@@ -27,10 +33,14 @@ public class DemoController {
     private int id;
     @Value("${example.name}")
     private String name;
+    @Value("${example.age}")
+    private int age;
+    @Value("${example.weight}")
+    private String weight;
 
     @GetMapping("/demo")
     public String demo() {
-        return String.format("id: %s, name: %s", id, name);
+        return String.format("id: %s, name: %s, age: %s, weight: %s", id, name, age, weight);
     }
 }
 ```
@@ -39,17 +49,23 @@ public class DemoController {
 - 请求 [http://localhost:8080/nacos/demo](http://localhost:8080/nacos/demo)
 ```bash
 $ curl http://localhost:8080/nacos/demo
-id: 0, name: nacos-spring-cloud-example.properties
+id: 0, name: nacos-spring-cloud-example.properties, age: 23, weight: 1KG
 ```
 
 - 修改配置，验证是否可以实时更新
-  - 修改 `example.id`、`example.name` 的值
-  ```properties
-  example.id=123456
-  example.name=nacos-spring-cloud-example.properties.新
-  ```
-  - 请求 [http://localhost:8080/nacos/demo](http://localhost:8080/nacos/demo)
-  ```bash
-  $ curl http://localhost:8080/nacos/demo
-  id: 0, name: nacos-spring-cloud-example.properties.新
-  ```
+```properties
+# data id: nacos-spring-cloud-example.properties
+example.id=123456
+example.name=nacos-spring-cloud-example.properties.新
+
+# data id: ext-config-default.properties
+example.age=24
+
+# data id: ext-config.properties, group: REFRESH_GROUP
+example.weight=2KG
+```
+- 请求 [http://localhost:8080/nacos/demo](http://localhost:8080/nacos/demo)
+```bash
+$ curl http://localhost:8080/nacos/demo
+id: 0, name: nacos-spring-cloud-example.properties.新, age: 24, weight: 2KG
+```
