@@ -7,10 +7,35 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: demo
+        - id: baidu
           uri: https://www.baidu.com
           predicates:
+            # 支持：After、Before、Between、Cookie、Header、Host、Method、Path、Query、RemoteAddr
             - Path=/s
+#            - Between=2018-01-01T00:00:00+08:00[Asia/Shanghai], 2019-01-01T00:00:00+08:00[Asia/Shanghai]
+#            - Host=**.yl-online.top
+#            - Method=POST
+#            - Header=X-Request-Id, \d+
+#            - Query=foo, ba.
+#            - Query=wx
+#            - Cookie=x-wx-auth, \d+
+#            - After=2018-01-01T00:00:00+08:00[Asia/Shanghai]
+#            - Before=2019-01-01T00:00:00+08:00[Asia/Shanghai]
+#            - RemoteAddr=127.0.0.1/24
+#          filters:
+#            - AddRequestHeader=X-Request-Foo, Bar
+#            - AddRequestParameter=foo, bar
+#            - AddResponseHeader=X-Response-Foo, Bar
+#            - Hystrix=myCommandName
+#            - RewritePath=/consuming-service-endpoint, /backing-service-endpoint
+#            - PrefixPath=/my-path
+#            - name: RequestRateLimiter
+#                args:
+#                  redis-rate-limiter.replenishRate: 10
+#                  redis-rate-limiter.burstCapacity: 20
+#            - RedirectTo=302, http://acme.org
+#            - RemoveRequestHeader=X-Request-Foo
+#            - RemoveResponseHeader=X-Response-Foo
 management:
   endpoint:
     gateway:
