@@ -19,16 +19,22 @@ spring:
           predicates:
             - Path=/s
         - id: taobao
-          uri: https://s.taobao.com/
+          uri: https://www.taobao.com/
           predicates:
-            - Path=/search
+            - Path=/markets/3c/tbdc
 ```
+- 配置 bootstrap.properties
+```properties
+spring.cloud.nacos.config.ext-config[0].data-id=gateway.yaml
+spring.cloud.nacos.config.ext-config[0].refresh=true
+```
+> refresh要配置true，否则不能动态更新
 
 - 执行 NacosGatewayApp 启动网关项目
 
 - 浏览器访问
 
-分别访问[http://localhost:8080/s](http://localhost:8080/s)和[http://localhost:8080/search](http://localhost:8080/search)
+分别访问[http://localhost:8080/s](http://localhost:8080/s)和[http://localhost:8080/markets/3c/tbdc](http://localhost:8080/markets/3c/tbdc)
 ，能正常转发到百度、淘宝网站
 
 - 修改 gateway.yaml 配置
@@ -42,7 +48,14 @@ spring:
           predicates:
             - Path=/s
 ```
-再次访问[http://localhost:8080/search](http://localhost:8080/search)，会返回404页面
+控制台打印一下日志，说明配置修改已经被监听到
+```text
+org.springframework.cloud.endpoint.event.RefreshEventListener.handle(37) | Refresh keys changed: [spring.cloud
+.gateway.routes.xxx]
+```
+
+
+再次访问[http://localhost:8080/markets/3c/tbdc](http://localhost:8080/markets/3c/tbdc)，会返回404页面
 > 说明修改的配置已经动态更新了
 
 - 动态更新的原理
