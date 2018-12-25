@@ -26,3 +26,10 @@
     </dependencies>
 </dependencyManagement>
 ```
+
+# Examples
+- [nacos-spring-boot-example](nacos-spring-boot-example/README.md) Nacos + spring-boot example
+- [nacos-spring-cloud-example](nacos-spring-cloud-example/README.md) Nacos + spring-cloud example
+- [nacos-spring-cloud-gateway-example](nacos-spring-cloud-gateway-example/README.md) Nacos + spring-cloud-gateway 实现动态路由规则配置
+- [sentinel-spring-cloud-example](sentinel-spring-cloud-example/README.md) sentinel example
+- [spring-cloud-gateway-example](spring-cloud-gateway-example/README.md) spring-cloud-gateway example
