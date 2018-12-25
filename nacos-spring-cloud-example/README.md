@@ -3,6 +3,7 @@
 
 > 官网对 bootstrap 和 application 两种配置文件的区别：Spring Cloud 构建于 Spring Boot 之上，在 Spring Boot 中有两种上下文，一种是 bootstrap, 另外一种是 application, bootstrap 是应用程序的父上下文，也就是说 bootstrap 加载优先于 application。bootstrap 主要用于从额外的资源来加载配置信息，还可以在本地外部配置文件中解密属性。这两个上下文共用一个环境，它是任何 Spring 应用程序的外部属性的来源。bootstrap 里面的属性会优先加载，它们默认也不能被本地相同配置覆盖
 
+# 开始
 - bootstrap.properties
 ```properties
 spring.application.name=nacos-spring-cloud-example
@@ -18,9 +19,13 @@ example.name=nacos-spring-cloud-example.properties
 
 # data id: ext-config-default.properties
 example.age=23
-
+```
+```yaml
 # data id: ext-config.properties, group: REFRESH_GROUP
-example.weight=1KG
+example: 
+  weight: 1KG
+# 或者
+# example.weight: 1KG
 ```
 
 - DemoController.java
@@ -60,12 +65,19 @@ example.name=nacos-spring-cloud-example.properties.新
 
 # data id: ext-config-default.properties
 example.age=24
-
+```
+```yaml
 # data id: ext-config.properties, group: REFRESH_GROUP
-example.weight=2KG
+example: 
+  weight: 2KG
 ```
 - 请求 [http://localhost:8080/nacos/demo](http://localhost:8080/nacos/demo)
 ```bash
 $ curl http://localhost:8080/nacos/demo
 id: 0, name: nacos-spring-cloud-example.properties.新, age: 24, weight: 2KG
 ```
+
+# 结论
+- 如果`spring.cloud.nacos.config.ext-config[0].refresh=false`，配置了`@RefreshScope`，`ext-config[0].data-id`的配置不会动态更新
+- 如果`spring.cloud.nacos.config.ext-config[0].refresh=true`，没有配置`@RefreshScope`，`ext-config[0].data-id`的配置不会动态更新
+- `spring-cloud-starter-alibaba-nacos-config`支持propertis、yaml格式的配置
