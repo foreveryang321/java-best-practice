@@ -48,7 +48,7 @@ spring:
           predicates:
             - Path=/s
 ```
-控制台打印一下日志，说明配置修改已经被监听到
+控制台打印以下日志，说明配置修改已经被监听到
 ```text
 org.springframework.cloud.endpoint.event.RefreshEventListener.handle(37) | Refresh keys changed: [spring.cloud
 .gateway.routes.xxx]
