@@ -24,7 +24,7 @@ spring:
             - Path=/search
 ```
 
-- 指定 NacosGatewayApp 启动网关项目
+- 执行 NacosGatewayApp 启动网关项目
 
 - 浏览器访问
 
