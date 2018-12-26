@@ -108,7 +108,7 @@ org.springframework.cloud.endpoint.event.RefreshEventListener.handle(37) | Refre
 > 说明修改的配置已经动态更新了
 
 # 动态更新原理
-`spring-cloud-gateway` 的 RouteRefreshListener 已经监听了 ApplicationEvent 事件，所以当 Nacos 中的路由规则变更后，会监听到`context refresh event`事件，从而调用 RouteRefreshListener.reset() 方法 publish 路由更新事件，达到路由动态更新的目的
+`spring-cloud-gateway` 的 RouteRefreshListener 已经监听了 ApplicationEvent 事件，所以当 Nacos 中的路由规则变更后，会监听到`RefreshScopeRefreshedEvent`事件，从而调用 RouteRefreshListener.reset() 方法 publish 路由更新事件`RefreshRoutesEvent`，达到路由动态更新的目的
 
 ## spring-cloud-alibaba-nacos-config
 在`spring-cloud-alibaba-nacos-config`中，会默认监听配置的更新，并publish refresh事件
