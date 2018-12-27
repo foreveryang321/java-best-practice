@@ -26,11 +26,35 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
-            <version>0.2.0.RELEASE</version>
+            <version>0.2.1.RELEASE</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.alibaba.csp</groupId>
+                    <artifactId>sentinel-cluster-client-default</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.alibaba.csp</groupId>
+                    <artifactId>sentinel-cluster-server-default</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.alibaba.csp</groupId>
                     <artifactId>sentinel-dubbo-adapter</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.alibaba.csp</groupId>
+                    <artifactId>sentinel-parameter-flow-control</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.alibaba.csp</groupId>
+                    <artifactId>sentinel-annotation-aspectj</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-aop</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-alibaba-sentinel-datasource</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

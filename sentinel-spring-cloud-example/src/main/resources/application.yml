@@ -1,3 +1,15 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /sentinel
 spring:
-  profiles:
-    active: local
+  application:
+    name: sentinel-spring-cloud-example
+  cloud:
+    sentinel:
+      transport:
+        dashboard: 192.168.56.101:8847
+        port: 8719
+      filter:
+        url-patterns:
+          - '/*'
