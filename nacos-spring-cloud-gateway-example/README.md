@@ -108,7 +108,9 @@ org.springframework.cloud.endpoint.event.RefreshEventListener.handle(37) | Refre
 > 说明修改的配置已经动态更新了
 
 # 动态更新原理
-`spring-cloud-gateway` 的 RouteRefreshListener 已经监听了 ApplicationEvent 事件，所以当 Nacos 中的路由规则变更后，会监听到`RefreshScopeRefreshedEvent`事件，从而调用 RouteRefreshListener.reset() 方法 publish 路由更新事件`RefreshRoutesEvent`，达到路由动态更新的目的
+1. [Nacos](https://nacos.io/zh-cn/) 配置更新的时候，`spring-cloud-starter-alibaba-nacos-config`会 `publish` 一个 `RefreshEvent` 事件，从而使 `spring-cloud-commons` 的 `RefreshEventListener` 监听到并触发 `ContextRefresher.refresh()` 方法。
+2. `spring-cloud-gateway` 的 `RouteRefreshListener` 监听了 `ApplicationEvent` 事件，当 `Nacos` 触发 `ContextRefresher.refresh()`后，会监听到 `RefreshScopeRefreshedEvent`事件并调用`RouteRefreshListener.reset()` 方法 `publish`  一个 `RefreshRoutesEvent` 路由更新事件，达到路由动态更新的目的。
+
 
 ## spring-cloud-alibaba-nacos-config
 在`spring-cloud-alibaba-nacos-config`中，会默认监听配置的更新，并publish refresh事件
@@ -233,6 +235,33 @@ public class NacosContextRefresher
 ```
 
 ## spring-cloud-gateway
+
+- RefreshEventListener.java
+```java
+public class RefreshEventListener {
+	private static Log log = LogFactory.getLog(RefreshEventListener.class);
+	private ContextRefresher refresh;
+	private AtomicBoolean ready = new AtomicBoolean(false);
+
+	public RefreshEventListener(ContextRefresher refresh) {
+		this.refresh = refresh;
+	}
+
+	@EventListener
+	public void handle(ApplicationReadyEvent event) {
+		this.ready.compareAndSet(false, true);
+	}
+
+	@EventListener
+	public void handle(RefreshEvent event) {
+		if (this.ready.get()) { // don't handle events before app is ready
+			log.debug("Event received " + event.getEventDesc());
+			Set<String> keys = this.refresh.refresh();
+			log.info("Refresh keys changed: " + keys);
+		}
+	}
+}
+```
 
 - RouteRefreshListener.java
 
