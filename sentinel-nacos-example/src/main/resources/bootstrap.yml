@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: nacos-sentinel-example
+  cloud:
+    nacos:
+      config:
+        server-addr: 192.168.56.101:8848
