@@ -64,4 +64,4 @@ transfer-encoding: chunked
 {"id":9,"name":"test_9"}
 {"id":10,"name":"test_10"}
 ```
-> 可以发现，响应式返回的不是json格式数据，而是单行返回每个实体
+> 可以发现，响应式返回的不是标准的json格式数据，而是单行返回每个实体
