@@ -21,6 +21,7 @@
         <module>nacos-spring-cloud-gateway-example</module>
         <module>nacos-spring-cloud-example</module>
         <module>sentinel-nacos-example</module>
+        <module>spring-webflux-example</module>
     </modules>
 
     <properties>
