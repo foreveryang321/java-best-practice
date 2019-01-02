@@ -3,7 +3,8 @@
 spring-webflux 响应式编程。本项目提供一个堵塞的例子（[http://localhost:8080/user/block](http://localhost:8080/user/block)
 ）、一个响应式的（[http://localhost:8080/user/rx](http://localhost:8080/user/rx)）例子
 
-> 由于这里使用的是`spring-data-jpa`，而它目前是还不支持响应式api，所有需要做一下适配
+> 由于这里使用的是`spring-data-jpa`，而`Reactive`对`Spring 
+Data`的支持还不够完整，只支持了`MongoDB`、`Redis`、`Cassandra`和`Couchbase`，还不支持`JPA`、`JDBC`、`LDAP`、`Elasticsearch`、`Neo4j`、`Solr`。
 
 ## 堵塞
 - 请求
@@ -40,7 +41,7 @@ public Flux<User> rx() {
     return this.userService.findAll();
 }
 ```
-> application/stream+json 可以让调用方识别出，这些数据是分批响应式传递，而不用等待传输完才开始处理
+> 让用户在第一时间看到数据而不是等待数据采集完毕。application/stream+json 可以让调用方识别出，这些数据是分批响应式传递，而不用等待传输完才开始处理
 
 
 - 请求

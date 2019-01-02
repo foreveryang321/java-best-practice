@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import top.ylonline.spring.webflux.example.entity.User;
 import top.ylonline.spring.webflux.example.repository.UserRepository;
 import top.ylonline.spring.webflux.example.service.UserService;
@@ -37,5 +38,11 @@ public class UserController {
     @ResponseBody
     public Flux<User> rx() {
         return this.userService.findAll();
+    }
+
+    @GetMapping(value = "/rx2")
+    @ResponseBody
+    public Mono<List<User>> rx2() {
+        return this.userService.findAll2();
     }
 }
