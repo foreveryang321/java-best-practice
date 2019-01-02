@@ -10,7 +10,7 @@ spring-webflux 响应式编程。本项目提供一个堵塞的例子（[http://
 
 使用浏览器或者postman请求：[http://localhost:8080/user/block](http://localhost:8080/user/block)
 
-抓包可以看到以下相应头部（Response Headers）内容
+抓包可以看到以下响应头部（Response Headers）内容
 ```text
 Content-Length: 253
 Content-Type: application/json;charset=UTF-8;q=0.8
@@ -47,7 +47,7 @@ public Flux<User> rx() {
 
 使用浏览器或者postman请求：[http://localhost:8080/user/rx](http://localhost:8080/user/rx)
 
-抓包可以看到以下相应头部（Response Headers）内容
+抓包可以看到以下响应头部（Response Headers）内容
 ```text
 Content-Type: application/stream+json;q=0.8;charset=UTF-8
 transfer-encoding: chunked
