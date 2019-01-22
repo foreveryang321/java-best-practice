@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: dubbo-spring-boot-provider-example
+dubbo:
+  application:
+    name: dubbo-spring-boot-provider-example
+    qos-enable: false
+  registry:
+    address: zookeeper://192.168.56.101:2181
+    client: curator
+#  protocol:
+#    name: dubbo
+#    port: 20880
+#    server: netty4
+#  protocol:
+#    name: rest
+#    port: 9090
+#    server: netty
+  config:
+    multiple: true
+  protocols:
+    dubbo:
+      name: dubbo
+      port: 20880
+      server: netty4
+    rest:
+      name: rest
+      port: 9090
+      server: netty
+  provider:
+    delay: -1
+    timeout: 20000
+    retries: 0
