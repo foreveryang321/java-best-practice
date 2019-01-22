@@ -1,0 +1,12 @@
+debug: false
+server:
+  port: 8080
+  servlet:
+    context-path: /nacos
+spring:
+  application:
+    name: nacos-spring-boot-example
+nacos:
+  config:
+    server-addr: 192.168.56.101:8848
+    namespace: d33cc729-4947-4c06-8c66-883507e1e509

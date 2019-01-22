@@ -1,8 +1,9 @@
 # nacos-spring-boot-example
 > 目前 Nacos 已经更新到 0.7.0 版本
 
+> 由于这里使用的是 spring.profiles.active=local 环境，所以需要在`nacos`控制台配置新建一个`local`命名空间（namespace）
 
-- 在 [Nacos](https://nacos.io/zh-cn/) 控制台 public 命名空间下新建 `nacos-spring-boot-example.properties` 配置
+- 在 [Nacos](https://nacos.io/zh-cn/) 控制台 local 命名空间下新建 `nacos-spring-boot-example.properties` 配置
 ```properties
 example.id=123
 example.name=nacos-spring-boot-example.properties
