@@ -1,7 +1,14 @@
 # nacos-spring-boot-example
 > 目前 Nacos 已经更新到 0.7.0 版本
 
-> 由于项目使用了多环境配置（dev、local、pro），所以需要在`nacos`控制台配置新建3个命名空间（namespace）分别对应 spring profile 环境
+> 项目使用了 spring profile 多环境配置（dev、local、pro），所以需要在`nacos`控制台配置新建3个命名空间（假设新建的3个命名空间也分别是dev、local、pro）分别对应 spring profile 多环境
+
+- 配置 spring profile
+```yaml
+spring:
+  profiles:
+    active: local
+```
 
 - 在 [Nacos](https://nacos.io/zh-cn/) 控制台 local 命名空间下新建 `nacos-spring-boot-example.properties` 配置
 ```properties
