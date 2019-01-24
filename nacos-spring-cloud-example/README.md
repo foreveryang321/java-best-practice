@@ -21,7 +21,7 @@ example.name=nacos-spring-cloud-example.properties
 example.age=23
 ```
 ```yaml
-# data id: ext-config.properties, group: REFRESH_GROUP
+# data id: ext-config.yaml, group: REFRESH_GROUP
 example: 
   weight: 1KG
 # 或者
