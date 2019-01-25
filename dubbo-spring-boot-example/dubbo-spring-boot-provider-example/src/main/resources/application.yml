@@ -7,8 +7,10 @@ dubbo:
     qos-enable: false
   registry:
     address: zookeeper://192.168.56.101:2181
+#    address: nacos://192.168.56.101:8848
     client: curator
-#  protocol:
+#    register: false
+  #  protocol:
 #    name: dubbo
 #    port: 20880
 #    server: netty4
