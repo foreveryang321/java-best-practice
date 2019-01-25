@@ -21,7 +21,7 @@ dubbo:
   protocols:
     dubbo:
       name: dubbo
-      port: 20880
+      port: -1
       server: netty4
     rest:
       name: rest
