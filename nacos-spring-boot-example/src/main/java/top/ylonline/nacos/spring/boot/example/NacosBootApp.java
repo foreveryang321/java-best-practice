@@ -40,9 +40,11 @@ public class NacosBootApp {
     private int id;
     @Value("${example.name}")
     private String name;
+    @NacosValue(value = "${example.profile:读取不到}", autoRefreshed = true)
+    private String profile;
 
     @GetMapping("/demo")
     public String demo() {
-        return String.format("id: %s, name: %s", id, name);
+        return String.format("{\"id\": %s, \"name\": \"%s\", \"profile\": \"%s\"}", id, name, profile);
     }
 }
