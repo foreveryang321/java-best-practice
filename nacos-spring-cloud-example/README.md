@@ -68,7 +68,13 @@ Loading nacos data, dataId: 'nacos-spring-cloud-example-nacos.properties', group
 - 请求 [http://localhost:8080/nacos/demo](http://localhost:8080/nacos/demo)
 ```bash
 $ curl http://localhost:8080/nacos/demo
-id: 0, name: nacos-spring-cloud-example.properties, age: 23, weight: 1KG
+{
+    "id": 0,
+    "name": "nacos-spring-cloud-example.properties",
+    "age": "23",
+    "weight": "1KG",
+    "profile": "nacos"
+}
 ```
 
 - 修改配置，验证是否可以实时更新
@@ -76,6 +82,9 @@ id: 0, name: nacos-spring-cloud-example.properties, age: 23, weight: 1KG
 # data id: nacos-spring-cloud-example.properties
 example.id=123456
 example.name=nacos-spring-cloud-example.properties.新
+
+# data id: nacos-spring-cloud-example-nacos.properties
+example.profile=nacos2
 
 # data id: ext-config-default.properties
 example.age=24
@@ -88,10 +97,17 @@ example:
 - 请求 [http://localhost:8080/nacos/demo](http://localhost:8080/nacos/demo)
 ```bash
 $ curl http://localhost:8080/nacos/demo
-id: 0, name: nacos-spring-cloud-example.properties.新, age: 24, weight: 2KG
+{
+    "id": 0,
+    "name": "nacos-spring-cloud-example.properties.新",
+    "age": "24",
+    "weight": "2KG",
+    "profile": "nacos2"
+}
 ```
 
 # 结论
+- 支持 spring profile 粒度的配置
 - 如果`spring.cloud.nacos.config.ext-config[0].refresh=false`，配置了`@RefreshScope`，`ext-config[0].data-id`的配置不会动态更新
 - 如果`spring.cloud.nacos.config.ext-config[0].refresh=true`，没有配置`@RefreshScope`，`ext-config[0].data-id`的配置不会动态更新
 - `spring-cloud-starter-alibaba-nacos-config`支持propertis、yaml格式的配置

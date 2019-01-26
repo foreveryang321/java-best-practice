@@ -24,24 +24,29 @@ example.profile=nacos
 ```bash
 $ curl http://localhost:8080/nacos/demo
 {
-"id": 1,
-"name": "nacos-spring-boot-example.properties",
-"profile": "读取不到"
+    "id": 123,
+    "name": "nacos-spring-boot-example.properties",
+    "profile": "读取不到"
 }
 ```
 
 - 修改配置，验证是否可以实时更新
   - 修改 `example.id`、`example.name` 的值
   ```properties
+  # DATA ID：nacos-spring-boot-example.properties
   example.id=123456
   example.name=nacos-spring-boot-example.properties.new
   ```
   - 请求 [http://localhost:8080/nacos/demo](http://localhost:8080/nacos/demo)
   ```bash
   $ curl http://localhost:8080/nacos/demo
-  id: 123456, name: nacos-spring-boot-example.properties
+  {
+      "id": 123456,
+      "name": "nacos-spring-boot-example.properties.new",
+      "profile": "读取不到"
+  }
   ```
 
 - 结论
   1. `@NacosValue`配置 autoRefreshed = true 是可以实时更新配置的，而`Spring`的`@Value`不能实时更新
-  2. 不支持 spring profile
+  2. 不支持 spring profile 粒度的配置（当前测试的`nacos-spring-boot-starter`版本）
