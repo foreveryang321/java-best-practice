@@ -17,6 +17,9 @@ spring.cloud.nacos.config.server-addr=192.168.56.101:8848
 example.id=123
 example.name=nacos-spring-cloud-example.properties
 
+# data id: nacos-spring-cloud-example-nacos.properties
+example.profile=nacos
+
 # data id: ext-config-default.properties
 example.age=23
 ```
@@ -42,14 +45,25 @@ public class DemoController {
     private int age;
     @Value("${example.weight}")
     private String weight;
+    @Value("${example.profile}")
+    private String profile;
 
     @GetMapping("/demo")
     public String demo() {
-        return String.format("id: %s, name: %s, age: %s, weight: %s", id, name, age, weight);
+        return String.format("{\"id\": \"%s\", \"name\": \"%s\", \"age\": \"%s\", \"weight\": \"%s\", \"profile\": " +
+                "\"%s\"}", id, name, age, weight, profile);
     }
 }
 ```
 > 这里要添加`@RefreshScope`注解，否则不能动态更新 id、name 的值。这里的`@NacosValue`不起作用，获取到 id 值为0
+
+- 控制台打印
+```text
+Loading nacos data, dataId: 'ext-config-default.properties', group: 'DEFAULT_GROUP'
+Loading nacos data, dataId: 'ext-config.yaml', group: 'REFRESH_GROUP'
+Loading nacos data, dataId: 'nacos-spring-cloud-example.properties', group: 'DEFAULT_GROUP'
+Loading nacos data, dataId: 'nacos-spring-cloud-example-nacos.properties', group: 'DEFAULT_GROUP'
+```
 
 - 请求 [http://localhost:8080/nacos/demo](http://localhost:8080/nacos/demo)
 ```bash

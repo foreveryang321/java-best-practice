@@ -22,9 +22,12 @@ public class DemoController {
     private int age;
     @Value("${example.weight}")
     private String weight;
+    @Value("${example.profile}")
+    private String profile;
 
     @GetMapping("/demo")
     public String demo() {
-        return String.format("id: %s, name: %s, age: %s, weight: %s", id, name, age, weight);
+        return String.format("{\"id\": %s, \"name\": \"%s\", \"age\": \"%s\", \"weight\": \"%s\", \"profile\": " +
+                "\"%s\"}", id, name, age, weight, profile);
     }
 }
