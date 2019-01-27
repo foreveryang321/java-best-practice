@@ -192,3 +192,4 @@ java.lang.NullPointerException: null
 	at com.alibaba.dubbo.rpc.protocol.rest.RestProtocol.doRefer(RestProtocol.java:191)
 	...
 ```
+> 据说，`dubbo-registry-nacos`下个版本（0.0.3）修复这个问题
