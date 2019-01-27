@@ -7,7 +7,6 @@ dubbo:
     qos-enable: false
   registry:
     address: nacos://192.168.56.101:8848
-    client: curator
 #    register: false
   #  protocol:
 #    name: dubbo

@@ -3,6 +3,8 @@ server:
   servlet:
     context-path: /
 spring:
+  profiles:
+    active: zk
   application:
     name: dubbo-spring-boot-consumer-example
 #dubbo:

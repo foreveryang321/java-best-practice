@@ -179,3 +179,16 @@ public interface EchoService {
 
 
 > 解决方法：将`dubbo-dependencies-bom`作为`parent`，`spring-boot-starter-parent`放到`dependencyManagement`中，但是如果这样的话，有可能引发其他依赖问题
+
+
+## 从 zk 切换到 nacos 注册中心
+- rest 协议会出问题
+
+正常获取到的服务地址应该是：rest://192.168.56.1:9090/top.ylonline.dubbo.spring.boot.example.api.EchoService?anyhost=true...，但是改成 
+Nacos 注册中心后，获取到的服务地址是：rest://192.168.56.1:9090?anyhost=true...，从而导致`RestProtocol`空指针异常
+```text
+java.lang.NullPointerException: null
+	at com.alibaba.dubbo.rpc.protocol.rest.RestProtocol.getContextPath(RestProtocol.java:235)
+	at com.alibaba.dubbo.rpc.protocol.rest.RestProtocol.doRefer(RestProtocol.java:191)
+	...
+```

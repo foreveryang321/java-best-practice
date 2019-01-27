@@ -14,7 +14,7 @@ import java.util.Collections;
  * @author YL
  */
 @SpringBootApplication
-@ImportResource(locations = {"classpath:dubbo-consumer.xml"})
+@ImportResource(locations = {"classpath:dubbo-consumer-${spring.profiles.active}.xml"})
 @DubboComponentScan(basePackages = {"top.ylonline.dubbo.spring.boot.example"})
 @Slf4j
 public class DubboSpringBootConsumerExample {

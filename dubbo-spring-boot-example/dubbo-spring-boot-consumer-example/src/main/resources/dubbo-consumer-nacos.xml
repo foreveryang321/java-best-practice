@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+       http://dubbo.apache.org/schema/dubbo
+       http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="dubbo-spring-boot-consumer-example">
+        <!-- 关闭 qos -->
+        <dubbo:parameter key="qos.enable" value="false"/>
+    </dubbo:application>
+
+    <dubbo:registry address="nacos://192.168.56.101:8848"/>
+
+    <dubbo:consumer check="false" client="netty4"/>
+
+    <dubbo:reference id="dubboEchoService"
+                     interface="top.ylonline.dubbo.spring.boot.example.api.EchoService" protocol="dubbo"/>
+    <dubbo:reference id="restEchoService"
+                     interface="top.ylonline.dubbo.spring.boot.example.api.EchoService" protocol="rest"/>
+</beans>
