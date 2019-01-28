@@ -16,6 +16,8 @@
 
     <dubbo:consumer check="false" client="netty4"/>
 
+    <dubbo:reference id="userService"
+                     interface="top.ylonline.dubbo.spring.boot.api.UserService"/>
     <dubbo:reference id="dubboEchoService"
                      interface="top.ylonline.dubbo.spring.boot.api.EchoService" protocol="dubbo"/>
     <dubbo:reference id="restEchoService"

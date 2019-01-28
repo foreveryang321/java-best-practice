@@ -21,9 +21,9 @@
 ## 启动 dubbo-spring-boot-consumer-example
 
 分别访问以下地址来判断`consumer`端使用多协议是否正常
-- [http://localhost:8080/demo/dubbo?message=使用dubbo协议](http://localhost:8080/demo/dubbo?message=使用dubbo协议)
-- [http://localhost:8080/demo/rest?message=使用rest协议](http://localhost:8080/demo/rest?message=使用rest协议)
-
+- [http://localhost:8080/demo/dubbo?message=dubbo-protocol](http://localhost:8080/demo/dubbo?message=dubbo-protocol)
+- [http://localhost:8080/demo/rest?message=rest-protocol](http://localhost:8080/demo/rest?message=rest-protocol)
+- [http://localhost:8080/demo/user?id=123](http://localhost:8080/demo/user?id=123)
 
 
 ## dubbo-2.6.5 提示 AnnotationInjectedBeanPostProcessor 异常
@@ -192,4 +192,4 @@ java.lang.NullPointerException: null
 	at com.alibaba.dubbo.rpc.protocol.rest.RestProtocol.doRefer(RestProtocol.java:191)
 	...
 ```
-> 据说，`dubbo-registry-nacos`下个版本（0.0.3）修复这个问题
+> 据说，`dubbo-registry-nacos`下个版本修复这个问题，当前版本：0.0.2。本人提了一个 [PR](https://github.com/dubbo/dubbo-registry-nacos/pull/14) 修复了这个问题
