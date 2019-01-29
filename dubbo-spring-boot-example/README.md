@@ -1,12 +1,11 @@
 # dubbo example
 
+- provider 多协议配置
+- consumer 由于 dubbo-2.6.5 及以下版本的 Reference 还不支持 protocol 属性（dubbo-2.7.0支持了），注解暂时无法指定协议，但是可以使用xml配置指定协议
+- zk、nacos 注册中心
 
-- dubbo-spring-boot-provider-example 多协议配置
-- dubbo-spring-boot-consumer-example 由于 dubbo-2.6.5 及以下版本的 Reference 还不支持 protocol 属性（dubbo-2.7.0支持了），注解暂时无法指定协议，但是可以使用xml配置指定协议
 
-
-
-## 启动 dubbo-spring-boot-provider-example
+## 启动 provider
 
 访问以下地址来判断`provider`端使用多协议是否正常
 
@@ -18,7 +17,7 @@
 
 
 
-## 启动 dubbo-spring-boot-consumer-example
+## 启动 consumer
 
 分别访问以下地址来判断`consumer`端使用多协议是否正常
 - [http://localhost:8080/demo/dubbo?message=dubbo-protocol](http://localhost:8080/demo/dubbo?message=dubbo-protocol)
