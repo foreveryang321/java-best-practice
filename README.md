@@ -1,35 +1,11 @@
-# java-learning-examples
+# java-best-practice
 
-本例子基于 spring-boot 2.0.6.RELEASE、spring-cloud Finchley.SR2
+java 的一些学习例子，最佳实践
 
-```xml
-<parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.0.6.RELEASE</version>
-    <relativePath/>
-</parent>
-
-<properties>
-    <spring-cloud.version>Finchley.SR2</spring-cloud.version>
-</properties>
-
-<dependencyManagement>
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-dependencies</artifactId>
-            <version>${spring-cloud.version}</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
-    </dependencies>
-</dependencyManagement>
-```
-
-# Examples
-- [nacos-spring-boot-example](nacos-spring-boot-example/README.md) Nacos + spring-boot 简单入门
-- [nacos-spring-cloud-example](nacos-spring-cloud-example/README.md) Nacos + spring-cloud 简单入门
+## Examples
+- [dubbo-spring-boot-example](dubbo-spring-boot-example/README.md) Dubbo + Spring Boot：zk + nacos 注册中心
+- [nacos-spring-boot-example](nacos-spring-boot-example/README.md) Nacos + Spring Boot 简单入门
+- [nacos-spring-cloud-example](nacos-spring-cloud-example/README.md) Nacos + Spring Cloud 简单入门
 - [nacos-spring-cloud-gateway-example](nacos-spring-cloud-gateway-example/README.md) gateway 实现动态路由规则：Nacos 配置中心
 - [sentinel-nacos-example](sentinel-nacos-example/README.md) Sentinel 配置动态规则数据源：Nacos 配置中心（zk、apollo同理）
 - [sentinel-spring-cloud-example](sentinel-spring-cloud-example/README.md) sentinel 简单入门
