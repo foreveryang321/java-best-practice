@@ -9,7 +9,7 @@
 
 访问以下地址来判断`provider`端使用多协议是否正常
 
-[http://localhost:9090/demo/echo?message=rest协议](http://localhost:9090/demo/echo?message=rest协议)
+[http://localhost:9090/demo/echo?message=rest-protocol](http://localhost:9090/demo/echo?message=rest-protocol)
 
 
 
@@ -25,7 +25,8 @@
 - [http://localhost:8080/demo/user?id=123](http://localhost:8080/demo/user?id=123)
 
 
-## dubbo-2.6.5 提示 AnnotationInjectedBeanPostProcessor 异常
+## AnnotationInjectedBeanPostProcessor 异常
+> dubbo-2.6.5 + dubbo-spring-boot-starter-0.2.0
 
 [issue](https://github.com/apache/incubator-dubbo/issues/2869)
 ```text
@@ -42,7 +43,7 @@ Caused by: java.lang.ClassNotFoundException: com.alibaba.spring.beans.factory.an
 
 
 
-## dubbo consumer 端
+## consumer 端
 
 - java.lang.NoClassDefFoundError: org/jboss/resteasy/client/jaxrs/engines/ApacheHttpClient4Engine
 
