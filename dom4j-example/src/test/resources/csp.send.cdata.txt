@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="GB2312"?>
+<SendData>
+    <BaseInfo>
+        <syscode>admin</syscode>
+        <password>admin123</password>
+        <FuncCode>接口组件名称</FuncCode>
+    </BaseInfo>
+    <param rows="1" cols="4">
+        <row rownum="1">
+            <col colnum="1" param_id="1">757</col>
+            <col colnum="2" param_id="2">2040817707</col>
+            <col colnum="3" param_id="3">20160923</col>
+            <col colnum="4" param_id="4">20170922</col>
+        </row>
+    </param>
+</SendData>

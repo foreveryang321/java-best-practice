@@ -1,0 +1,34 @@
+<Business>
+    <BaseInfo>
+        <ReqCode>admin20171120100304533</ReqCode>
+        <SysCode>admin</SysCode>
+        <SysPwd>admin123</SysPwd>
+        <SourceCode>1</SourceCode>
+        <TargetCode>200</TargetCode>
+        <FuncCode>接口组件名称</FuncCode>
+        <Sync>1</Sync>
+        <Version/>
+    </BaseInfo>
+    <SendData>
+        <inputdatas>
+            <controlinfo>
+                <staffid>root</staffid>
+                <password>root123</password>
+                <posttype>200</posttype>
+            </controlinfo>
+            <params sets="2">
+                <param rows="1" cols="2" set_id="101">
+                <row rownum="1">
+                    <col colnum="1" param_id="1015001" param_name="查询方式">2</col>
+                    <col colnum="2" param_id="1015002" param_name="查询编码">18111111111</col>
+                </row>
+                </param>
+                <param rows="1" cols="1" set_id="102">
+                <row rownum="1">
+                    <col colnum="1" param_id="1015011" param_name="结果集号">201</col>
+                </row>
+                </param>
+            </params>
+        </inputdatas>
+    </SendData>
+</Business>

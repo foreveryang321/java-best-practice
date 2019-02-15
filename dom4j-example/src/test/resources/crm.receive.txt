@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="GB2312"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+    <soapenv:Body>
+        <mbos:callResponse xmlns:mbos="mboss-esb">
+            <osb:recvData xmlns:osb="mboss-esb/osb">
+                <![CDATA[
+                <outputdatas>
+                    <resultcode>0</resultcode>
+                    <reason>OK</reason>
+                    <results sets="1">
+                        <result rows="1" cols="23" set_id="201">
+                            <row rownum="1">
+                                <col colnum="1" param_id="2015001" param_name="客户标识">3333333333</col>
+                                <col colnum="2" param_id="2015002" param_name="客户编码">2222222222222222</col>
+                                <col colnum="3" param_id="2015003" param_name="客户名称">姓名</col>
+                                <col colnum="4" param_id="2015004" param_name="服务等级">10</col>
+                                <col colnum="5" param_id="2015005" param_name="地址标识">2716872242</col>
+                                <col colnum="6" param_id="2015006" param_name="行业大类">50</col>
+                                <col colnum="7" param_id="2015007" param_name="行业小类">500101</col>
+                                <col colnum="8" param_id="2015008" param_name="客户性质">02</col>
+                                <col colnum="9" param_id="2015009" param_name="重要等级" />
+                                <col colnum="10" param_id="2015010" param_name="消费等级" />
+                                <col colnum="11" param_id="2015011" param_name="周期消费等级" />
+                                <col colnum="12" param_id="2015012" param_name="客户忠诚度">0</col>
+                                <col colnum="13" param_id="2015013" param_name="信用度">0</col>
+                                <col colnum="14" param_id="2015014" param_name="满意度">0</col>
+                                <col colnum="15" param_id="2015015" param_name="客户备注" />
+                                <col colnum="16" param_id="2015016" param_name="客户类型">03</col>
+                                <col colnum="17" param_id="2015017" param_name="行业中类">5001</col>
+                                <col colnum="18" param_id="2015018" param_name="客户密码">7777777A9F3AADBD</col>
+                                <col colnum="19" param_id="2015019" param_name="密码等级">1</col>
+                                <col colnum="20" param_id="2015020" param_name="客户密码状态">1</col>
+                                <col colnum="21" param_id="2015021" param_name="客户业务鉴权方式">UNDEF</col>
+                                <col colnum="22" param_id="2015022" param_name="保密等级" />
+                                <col colnum="23" param_id="2015023" param_name="外文名称" />
+                            </row>
+                        </result>
+                    </results>
+                </outputdatas>
+                ]]>
+            </osb:recvData>
+        </mbos:callResponse>
+    </soapenv:Body>
+</soapenv:Envelope>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:mbos="mboss-esb"
+                  xmlns:esb="mboss/esb">
+    <soapenv:Header>
+        <wsse:Security soapenv:mustUnderstand="1"
+                       xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+            <wsse:UsernameToken
+                    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+                    wsu:Id="unt_ocjPpjDSinrEWC8R">
+                <wsse:Username>admin</wsse:Username>
+                <wsse:Password
+                        Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">
+                    admin123
+                </wsse:Password>
+            </wsse:UsernameToken>
+        </wsse:Security>
+    </soapenv:Header>
+    <soapenv:Body>
+        <mbos:call>
+            <esb:data>
+                <esb:sendData>
+                    <![CDATA[
+                    <Business>
+                        <BaseInfo>
+                            <ReqCode>admin20171120100304533</ReqCode>
+                            <SysCode>admin</SysCode>
+                            <SysPwd>admin123</SysPwd>
+                            <SourceCode>1</SourceCode>
+                            <TargetCode>200</TargetCode>
+                            <FuncCode>接口组件名称</FuncCode>
+                            <Sync>1</Sync>
+                            <Version/>
+                        </BaseInfo>
+                        <SendData>
+                            <inputdatas>
+                                <controlinfo>
+                                    <staffid>root</staffid>
+                                    <password>root123</password>
+                                    <posttype>200</posttype>
+                                </controlinfo>
+                                <params sets="2">
+                                    <param rows="1" cols="2" set_id="101">
+                                    <row rownum="1">
+                                        <col colnum="1" param_id="1015001" param_name="查询方式">2</col>
+                                        <col colnum="2" param_id="1015002" param_name="查询编码">18111111111</col>
+                                    </row>
+                                    </param>
+                                    <param rows="1" cols="1" set_id="102">
+                                    <row rownum="1">
+                                        <col colnum="1" param_id="1015011" param_name="结果集号">201</col>
+                                    </row>
+                                    </param>
+                                </params>
+                            </inputdatas>
+                        </SendData>
+                    </Business>
+                    ]]>
+                </esb:sendData>
+            </esb:data>
+        </mbos:call>
+    </soapenv:Body>
+</soapenv:Envelope>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="gbk"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <soapenv:Body>
+        <ns1:inputResponse soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ns1="wsagent">
+            <inputReturn xsi:type="soapenc:string" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">
+                <?xml version="1.0" encoding="GB2312"?>
+                <SendData>
+                    <resultcode>0</resultcode>
+                    <reason>OK</reason>
+                    <result rows="1" cols="4">
+                        <row rownum="1">
+                            <col colnum="1" param_id="1" param_name="成功标志">0</col>
+                            <col colnum="2" param_id="2" param_name="失败原因">OK</col>
+                            <col colnum="3" param_id="201" param_name="balInfo▕▏balType﹏payobj﹏payobjtype"
+                                 param_type="1">201409移动话费促销包送话费(抵扣套外)_赠金﹏8538810489﹏1
+                            </col>
+                            <col colnum="4" param_id="202"
+                                 param_name="openInfo▕▏operType﹏money﹏operDate﹏operStaff﹏source﹏accnbr﹏ctrCode﹏payDate"
+                                 param_type="1">
+                                5UI﹏-891﹏20170702013614﹏1544051565/无法找到对应营业厅﹏﹏13333333333﹏8344144030﹏20170601:20170630▕▏5UI﹏-3030﹏20170901213459﹏1544051565/无法找到对应营业厅﹏﹏13333333333﹏8344144030﹏20170801:20170831▕▏5UI﹏-2132﹏20170602025720﹏1544051565/无法找到对应营业厅﹏﹏13333333333﹏8344144030﹏20170501:20170531▕▏5UD﹏30000﹏20170321101415﹏STF_YEZB/余额帐本【接口】﹏IBSS充值（一次出发票，不可退,ib赠送使用）﹏﹏﹏20170301:20170331
+                            </col>
+                        </row>
+                    </result>
+                </SendData>
+            </inputReturn>
+        </ns1:inputResponse>
+    </soapenv:Body>
+</soapenv:Envelope>

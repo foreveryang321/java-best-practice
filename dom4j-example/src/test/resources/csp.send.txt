@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <soapenv:Body>
+        <ns1:input soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ns1="wsagent">
+            <ns1:arg0 xsi:type="soapenc:string" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">
+                <![CDATA[
+                <?xml version="1.0" encoding="GB2312"?>
+                <SendData>
+                    <BaseInfo>
+                        <syscode>admin</syscode>
+                        <password>admin123</password>
+                        <FuncCode>接口组件名称</FuncCode>
+                    </BaseInfo>
+                    <param rows="1" cols="4">
+                    <row rownum="1">
+                        <col colnum="1" param_id="1">757</col>
+                        <col colnum="2" param_id="2">2040817707</col>
+                        <col colnum="3" param_id="3">20160923</col>
+                        <col colnum="4" param_id="4">20170922</col>
+                    </row>
+                    </param>
+                </SendData>
+                ]]>
+            </ns1:arg0>
+        </ns1:input>
+    </soapenv:Body>
+</soapenv:Envelope>
