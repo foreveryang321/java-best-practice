@@ -31,7 +31,7 @@ public class CspTest extends TestCase {
     }
 
     private void parse(String fileName) {
-        XMLParserConfiguration configuration = new XMLParserConfiguration(KEEP_ATTRRIBUTES, null, "#text");
+        XMLParserConfiguration configuration = new XMLParserConfiguration(KEEP_ATTRRIBUTES, null);
         String xml = getByFile(fileName, ENCODING);
         // if ("csp.receive.txt".equals(fileName)){
         //     if (StringUtils.isNotBlank(xml)) {

@@ -147,7 +147,7 @@ public class Dom4jUtils {
     private static void hasChildElementToMap(XMLParserConfiguration config, Element element, Map<String,
             Object> data) {
         if (config.isKeepAttributes() && !element.attributes().isEmpty()) {
-            Map<String, Object> tmp = attributeToMap(element, false, null);
+            Map<String, Object> tmp = attributeToMap(element, false);
             data.putAll(tmp);
         }
     }
@@ -155,7 +155,7 @@ public class Dom4jUtils {
     @SuppressWarnings("unchecked")
     private static void textOnlyElementToList(XMLParserConfiguration config, Element element, List list) {
         if (config.isKeepAttributes() && !element.attributes().isEmpty()) {
-            Map<String, Object> tmp = attributeToMap(element, true, config.getCdataTagName());
+            Map<String, Object> tmp = attributeToMap(element, true);
             list.add(tmp);
         } else {
             String textTrim = element.getTextTrim();
@@ -167,7 +167,7 @@ public class Dom4jUtils {
             Object> map) {
         String name = element.getName();
         if (config.isKeepAttributes() && !element.attributes().isEmpty()) {
-            Map<String, Object> tmp = attributeToMap(element, true, config.getCdataTagName());
+            Map<String, Object> tmp = attributeToMap(element, true);
             map.put(name, tmp);
         } else {
             String textTrim = element.getTextTrim();
@@ -175,13 +175,10 @@ public class Dom4jUtils {
         }
     }
 
-    private static Map<String, Object> attributeToMap(Element element, boolean needText, String tagName) {
+    private static Map<String, Object> attributeToMap(Element element, boolean needText) {
         Map<String, Object> tmp = new HashMap<>(4);
         if (needText) {
-            if (tagName == null || "".equals(tagName.trim())) {
-                throw new NullPointerException("tagName can not be empty!");
-            }
-            tmp.put(tagName, element.getTextTrim());
+            tmp.put("#text", element.getTextTrim());
         }
         List<Attribute> attributes = element.attributes();
         for (Attribute attribute : attributes) {
