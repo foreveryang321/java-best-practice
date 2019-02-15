@@ -17,6 +17,7 @@
         <module>sentinel-nacos-example</module>
         <module>spring-webflux-example</module>
         <module>dubbo-spring-boot-example</module>
+        <module>dom4j-example</module>
     </modules>
 
     <properties>

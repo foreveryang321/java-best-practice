@@ -1,6 +1,6 @@
 # java-best-practice
 
-java 的一些学习例子，最佳实践
+Java 的一些学习例子，最佳实践
 
 ## Examples
 - [dubbo-spring-boot-example](dubbo-spring-boot-example/README.md) Dubbo + Spring Boot：zk + nacos 注册中心
