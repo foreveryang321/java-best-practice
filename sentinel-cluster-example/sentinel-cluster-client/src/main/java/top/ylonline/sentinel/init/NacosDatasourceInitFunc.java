@@ -1,5 +1,7 @@
-package top.ylonline.sentinel.nacos.example.init;
+package top.ylonline.sentinel.init;
 
+import com.alibaba.csp.sentinel.cluster.client.config.ClusterClientConfig;
+import com.alibaba.csp.sentinel.cluster.client.config.ClusterClientConfigManager;
 import com.alibaba.csp.sentinel.datasource.ReadableDataSource;
 import com.alibaba.csp.sentinel.datasource.nacos.NacosDataSource;
 import com.alibaba.csp.sentinel.init.InitFunc;
@@ -20,34 +22,46 @@ import com.alibaba.fastjson.TypeReference;
 import java.util.List;
 
 /**
- * @author Created by YL on 2018/12/27
+ * @author YL
  */
 public class NacosDatasourceInitFunc implements InitFunc {
     private static final String SERVER_ADDR = "192.168.56.101:8848";
     private static final String GROUP_ID = "SENTINEL_GROUP";
-    private static final String FLOW_DATA_ID_POSTFIX = "-flow-rules";
-    private static final String PARAMETER_FLOW_DATA_ID_POSTFIX = "-parameter-flow-rules";
-    private static final String AUTHORITY_DATA_ID_POSTFIX = "-authority-rules";
-    private static final String DEGRADE_DATA_ID_POSTFIX = "-degrade-rules";
-    private static final String SYSTEM_DATA_ID_POSTFIX = "-system-rules";
+
+    private static final String APP_NAME = AppNameUtil.getAppName();
+    private static final String FLOW_DATA_ID_POSTFIX = APP_NAME + "-flow-rules";
+    private static final String PARAMETER_FLOW_DATA_ID_POSTFIX = APP_NAME + "-parameter-flow-rules";
+    private static final String AUTHORITY_DATA_ID_POSTFIX = APP_NAME + "-authority-rules";
+    private static final String DEGRADE_DATA_ID_POSTFIX = APP_NAME + "-degrade-rules";
+    private static final String SYSTEM_DATA_ID_POSTFIX = APP_NAME + "-system-rules";
+
+    private static final String CLUSTER_CLIENT_CONFIG_DATA_ID_POSTFIX = APP_NAME + "-cluster-client-config";
 
     @Override
     public void init() throws Exception {
-        // flow rule: client
+        registerDynamicRuleProperty();
+        registerClusterClientConfigProperty();
+    }
+
+    /**
+     * 注册动态数据源
+     */
+    private void registerDynamicRuleProperty() {
+        // flow rule
         ReadableDataSource<String, List<FlowRule>> flowDS = new NacosDataSource<>(
                 SERVER_ADDR,
                 GROUP_ID,
-                AppNameUtil.getAppName() + FLOW_DATA_ID_POSTFIX,
+                FLOW_DATA_ID_POSTFIX,
                 source -> JSON.parseObject(source, new TypeReference<List<FlowRule>>() {
                 })
         );
         FlowRuleManager.register2Property(flowDS.getProperty());
 
-        // parameter rule: client
+        // parameter rule
         ReadableDataSource<String, List<ParamFlowRule>> paramFlowDS = new NacosDataSource<>(
                 SERVER_ADDR,
                 GROUP_ID,
-                AppNameUtil.getAppName() + PARAMETER_FLOW_DATA_ID_POSTFIX,
+                PARAMETER_FLOW_DATA_ID_POSTFIX,
                 source -> JSON.parseObject(source, new TypeReference<List<ParamFlowRule>>() {
                 })
         );
@@ -57,7 +71,7 @@ public class NacosDatasourceInitFunc implements InitFunc {
         ReadableDataSource<String, List<DegradeRule>> degradeDS = new NacosDataSource<>(
                 SERVER_ADDR,
                 GROUP_ID,
-                AppNameUtil.getAppName() + DEGRADE_DATA_ID_POSTFIX,
+                DEGRADE_DATA_ID_POSTFIX,
                 source -> JSON.parseObject(source, new TypeReference<List<DegradeRule>>() {
                 })
         );
@@ -67,7 +81,7 @@ public class NacosDatasourceInitFunc implements InitFunc {
         ReadableDataSource<String, List<AuthorityRule>> authorityDS = new NacosDataSource<>(
                 SERVER_ADDR,
                 GROUP_ID,
-                AppNameUtil.getAppName() + AUTHORITY_DATA_ID_POSTFIX,
+                AUTHORITY_DATA_ID_POSTFIX,
                 source -> JSON.parseObject(source, new TypeReference<List<AuthorityRule>>() {
                 })
         );
@@ -77,10 +91,21 @@ public class NacosDatasourceInitFunc implements InitFunc {
         ReadableDataSource<String, List<SystemRule>> systemDS = new NacosDataSource<>(
                 SERVER_ADDR,
                 GROUP_ID,
-                AppNameUtil.getAppName() + SYSTEM_DATA_ID_POSTFIX,
+                SYSTEM_DATA_ID_POSTFIX,
                 source -> JSON.parseObject(source, new TypeReference<List<SystemRule>>() {
                 })
         );
         SystemRuleManager.register2Property(systemDS.getProperty());
+    }
+
+    private void registerClusterClientConfigProperty() {
+        ReadableDataSource<String, ClusterClientConfig> clusterClientDS = new NacosDataSource<>(
+                SERVER_ADDR,
+                GROUP_ID,
+                CLUSTER_CLIENT_CONFIG_DATA_ID_POSTFIX,
+                source -> JSON.parseObject(source, new TypeReference<ClusterClientConfig>() {
+                })
+        );
+        ClusterClientConfigManager.register2Property(clusterClientDS.getProperty());
     }
 }

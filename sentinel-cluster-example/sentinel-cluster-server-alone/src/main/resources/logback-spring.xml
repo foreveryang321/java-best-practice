@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="false" scanPeriod="60 seconds" debug="false">
+    <property name="logger.charset" value="UTF-8"/>
+
+    <property name="logger.pattern"
+              value="%d{yy-MM-dd HH:mm:ss} %highlight(%p) %yellow(%t) %cyan(%c.%M\\(%L\\)) | %m%n"/>
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="${logger.charset}">
+            <pattern>${logger.pattern}</pattern>
+        </encoder>
+    </appender>
+    <root level="info">
+        <appender-ref ref="stdout"/>
+    </root>
+</configuration>

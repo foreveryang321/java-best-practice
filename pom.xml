@@ -14,9 +14,10 @@
         <module>spring-cloud-gateway-example</module>
         <module>nacos-spring-cloud-gateway-example</module>
         <module>nacos-spring-cloud-example</module>
-        <module>sentinel-nacos-example</module>
+        <module>sentinel-cluster-example</module>
         <module>spring-webflux-example</module>
         <module>dubbo-spring-boot-example</module>
+		<module>dubbo-spring-boot-example-2.7.x</module>
         <module>dom4j-example</module>
     </modules>
 

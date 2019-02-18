@@ -1,6 +1,6 @@
 spring:
   application:
-    name: nacos-sentinel-example
+    name: sentinel-cluster-client
   cloud:
     nacos:
       config:
