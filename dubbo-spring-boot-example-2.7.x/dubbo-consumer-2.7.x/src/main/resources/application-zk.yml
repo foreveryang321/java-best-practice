@@ -1,0 +1,19 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+spring:
+  application:
+    name: dubbo-consumer-2.7.x
+dubbo:
+  scan:
+    base-packages: top.ylonline.dubbo27x
+  application:
+    name: dubbo-consumer-2.7.x
+    qos-enable: false
+  registry:
+    address: zookeeper://192.168.56.101:2181
+    client: curator
+  consumer:
+    check: 'false'
+    client: netty

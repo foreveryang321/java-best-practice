@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: dubbo-provider-2.7.x
+dubbo:
+  scan:
+    base-packages: top.ylonline.dubbo27x
+  application:
+    name: dubbo-provider-2.7.x
+    qos-enable: false
+  registry:
+    address: zookeeper://192.168.56.101:2181
+    client: curator
+#    simplified: true
+  #  protocol:
+#    name: dubbo
+#    port: 20880
+#    server: netty4
+#  protocol:
+#    name: rest
+#    port: 9090
+#    server: netty
+  config:
+    multiple: true
+  protocols:
+    dubbo:
+      name: dubbo
+      port: -1
+      server: netty
+    rest:
+      name: rest
+      port: 9090
+      server: netty
+  provider:
+    delay: -1
+    timeout: 20000
+    retries: 0
