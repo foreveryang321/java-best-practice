@@ -1,4 +1,9 @@
 # dubbo example
+> 环境：  
+> dubbo 2.6.5  
+> duboo-spring-boot-starter 0.2.0  
+> dubbo-registry-nacos 0.0.2
+
 
 - provider 多协议配置
 - consumer 由于 dubbo-2.6.5 及以下版本的 Reference 还不支持 protocol 属性（dubbo-2.7.0支持了），注解暂时无法指定协议，但是可以使用xml配置指定协议
