@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * @author Created by YL on 2019/1/2
+ * @author YL
  */
 @Entity
 @Table(name = "t_user")

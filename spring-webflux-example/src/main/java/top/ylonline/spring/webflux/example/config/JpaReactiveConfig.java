@@ -12,7 +12,7 @@ import reactor.core.scheduler.Schedulers;
 import java.util.concurrent.Executors;
 
 /**
- * @author Created by YL on 2019/1/2
+ * @author YL
  */
 @Configuration
 public class JpaReactiveConfig {
