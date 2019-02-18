@@ -9,8 +9,9 @@
 
 访问以下地址来判断`provider`端使用多协议是否正常
 
-[http://localhost:9090/demo/echo?message=rest-protocol](http://localhost:9090/demo/echo?message=rest-protocol)
+[http://localhost:9090/single/echo?message=rest-protocol](http://localhost:9090/single/echo?message=rest-protocol)
 
+[http://localhost:9090/multiple/echo?message=dubbo-or-rest-protocol](http://localhost:9090/multiple/echo?message=dubbo-or-rest-protocol)
 
 
 <!-- more -->
@@ -22,7 +23,7 @@
 分别访问以下地址来判断`consumer`端使用多协议是否正常
 - [http://localhost:8080/demo/dubbo?message=dubbo-protocol](http://localhost:8080/demo/dubbo?message=dubbo-protocol)
 - [http://localhost:8080/demo/rest?message=rest-protocol](http://localhost:8080/demo/rest?message=rest-protocol)
-- [http://localhost:8080/demo/user?id=123](http://localhost:8080/demo/user?id=123)
+- [http://localhost:8080/demo/multiple?message=dubbo-or-rest-protocol](http://localhost:8080/demo/multiple?message=dubbo-or-rest-protocol)
 
 
 ## AnnotationInjectedBeanPostProcessor 异常
@@ -66,7 +67,7 @@ Caused by: java.lang.ClassNotFoundException: com.alibaba.spring.beans.factory.an
 
 
 ```java
-package top.ylonline.dubbo.spring.boot.example.api;
+package top.ylonline.dubbo.spring.boot.api;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -75,8 +76,8 @@ import javax.ws.rs.QueryParam;
 /**
  * @author YL
  */
-@Path("/demo")
-public interface EchoService {
+@Path("/single")
+public interface RestService {
     /**
      * echo
      *

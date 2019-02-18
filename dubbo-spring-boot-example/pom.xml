@@ -13,9 +13,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>api</module>
-        <module>consumer</module>
-        <module>provider</module>
+        <module>dubbo-api</module>
+        <module>dubbo-consumer</module>
+        <module>dubbo-provider</module>
     </modules>
 
     <properties>
@@ -45,21 +45,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>-->
-            <dependency>
-                <groupId>org.apache.dubbo</groupId>
-                <artifactId>dubbo</artifactId>
-                <version>2.7.0</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>com.google.code.gson</groupId>
-                        <artifactId>gson</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>io.netty</groupId>
-                        <artifactId>netty-all</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>dubbo</artifactId>

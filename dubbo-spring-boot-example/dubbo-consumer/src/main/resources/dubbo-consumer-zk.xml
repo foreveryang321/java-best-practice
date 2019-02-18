@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+       http://dubbo.apache.org/schema/dubbo
+       http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="dubbo-consumer">
+        <!-- 关闭 qos -->
+        <dubbo:parameter key="qos.enable" value="false"/>
+    </dubbo:application>
+
+    <dubbo:registry address="zookeeper://192.168.56.101:2181" client="curator"/>
+
+    <dubbo:consumer check="false" client="netty4"/>
+
+    <dubbo:reference id="multipleService"
+                     interface="top.ylonline.dubbo.spring.boot.api.MultipleService" protocol="rest"/>
+    <dubbo:reference id="dubboService"
+                     interface="top.ylonline.dubbo.spring.boot.api.DubboService"/>
+    <dubbo:reference id="restService"
+                     interface="top.ylonline.dubbo.spring.boot.api.RestService"/>
+</beans>

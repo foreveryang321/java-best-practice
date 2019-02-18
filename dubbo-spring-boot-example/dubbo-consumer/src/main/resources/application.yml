@@ -1,0 +1,19 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+spring:
+  profiles:
+    active: zk
+  application:
+    name: dubbo-consumer
+#dubbo:
+#  application:
+#    name: dubbo-consumer
+#    qos-enable: false
+#  registry:
+#    address: zookeeper://192.168.56.101:2181
+#    client: curator
+#  consumer:
+#    check: 'false'
+#    client: netty4
