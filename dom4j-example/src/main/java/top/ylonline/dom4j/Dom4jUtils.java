@@ -43,7 +43,7 @@ public class Dom4jUtils {
      * @param xml    xml 报文
      * @param config 需不需要解析 attribute
      */
-    public static Map<String, Object> documentToJSONObject(String xml, XMLParserConfiguration config) {
+    public static Map<String, Object> parse(String xml, XMLParserConfiguration config) {
         Document document = strToDocument(xml);
         return parse(document, config);
     }

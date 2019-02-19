@@ -47,7 +47,7 @@ public class CspTest extends TestCase {
         // 去掉<?xml version="1.0" encoding="UTF-8"?>
         xml = xml.replaceAll("(<\\?[^<]*\\?>)?", "");
 
-        String json = JSON.toJSONString(Dom4jUtils.documentToJSONObject(xml, configuration));
+        String json = JSON.toJSONString(Dom4jUtils.parse(xml, configuration));
         System.out.println(fileName + " --->\n<--- " + json);
     }
 }
