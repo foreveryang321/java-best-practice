@@ -19,7 +19,7 @@
 [http://localhost:9090/top.ylonline.dubbo27x.api.MultipleService/multiple/echo?message=dubbo-or-rest-protocol]
 (http://localhost:9090/top.ylonline.dubbo27x.api.MultipleService/multiple/echo?message=dubbo-or-rest-protocol)
 
-> 使用接口的全限类名作为contextpath是dubbo-2.7.0的bug，请看[issue](https://github.com/apache/incubator-dubbo/issues/3445)，此[PR](https://github.com/apache/incubator-dubbo/pull/3479)修复了这个问题
+> 使用接口的全限类名作为`contextpath`是dubbo-2.7.0的bug，请看[issue](https://github.com/apache/incubator-dubbo/issues/3445)，此[PR](https://github.com/apache/incubator-dubbo/pull/3479)修复了这个问题
 
 
 <!-- more -->
@@ -35,7 +35,7 @@
 
 
 
-## consumer 端
+## consumer 端异常问题
 
 - java.lang.NoClassDefFoundError: org/jboss/resteasy/client/jaxrs/engines/ApacheHttpClient4Engine
 
@@ -80,10 +80,9 @@ public interface RestService {
     @Path("/echo")
     String echo(@QueryParam("message") String message);
 }
-
 ```
 
-## Duplicate application configs
+- Duplicate application configs
 当使用`org.apache.dubbo:dubbo-spring-boot-starter` 2.7.0，同时使用xml作为`dubbo`的配置时，会出现一些异常
 
 
@@ -91,5 +90,5 @@ Caused by: java.lang.IllegalStateException: Duplicate application configs: <dubb
 
 
 解决方法：
-- 去掉`dubbo-spring-boot-starter`依赖，使用`xml`方式`dubbo`相关配置
+- 去掉`dubbo-spring-boot-starter`依赖，使用`xml`方式配置`dubbo`
 - 不使用`xml`方式配置`dubbo`，单单使用`dubbo-spring-boot-starter`方式
