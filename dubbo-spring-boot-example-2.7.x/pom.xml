@@ -43,6 +43,8 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>-->
+
+            <!-- dubbo -->
             <dependency>
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo</artifactId>
@@ -58,11 +60,14 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+
+            <!-- dubbo spring-boot -->
             <dependency>
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo-spring-boot-starter</artifactId>
                 <version>${dubbo.version}</version>
             </dependency>
+
             <!-- Dubbo zookeeper registry dependency -->
             <dependency>
                 <groupId>org.apache.zookeeper</groupId>
