@@ -9,16 +9,12 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>nacos-spring-boot-example</module>
-        <module>sentinel-spring-cloud-example</module>
-        <module>spring-cloud-gateway-example</module>
-        <module>nacos-spring-cloud-gateway-example</module>
-        <module>nacos-spring-cloud-example</module>
-        <module>sentinel-cluster-example</module>
         <module>spring-webflux-example</module>
-        <module>dubbo-spring-boot-example</module>
-		<module>dubbo-spring-boot-example-2.7.x</module>
         <module>dom4j-example</module>
+        <module>nacos-example</module>
+        <module>dubbo-example</module>
+        <module>gateway-example</module>
+        <module>sentinel-example</module>
     </modules>
 
     <properties>
@@ -46,6 +42,32 @@
     </dependencies>
 
     <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>1.1.0</version>
+                <configuration>
+                    <updatePomFile>true</updatePomFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
             <plugins>
                 <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->

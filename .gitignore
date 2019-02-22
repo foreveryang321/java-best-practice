@@ -1,5 +1,6 @@
 # maven ignore
 dependency-reduced-pom.xml
+.flattened-pom.xml
 
 target/
 !.mvn/wrapper/*
