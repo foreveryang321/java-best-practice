@@ -9,11 +9,9 @@
 
 访问以下地址来判断`provider`端使用多协议是否正常
 
-[http://localhost:9090/top.ylonline.dubbo27x.api.RestService/single/echo?message=rest-protocol]
-(http://localhost:9090/top.ylonline.dubbo27x.api.RestService/single/echo?message=rest-protocol)
+[http://localhost:9090/top.ylonline.dubbo27x.api.RestService/single/echo?message=rest-protocol](http://localhost:9090/top.ylonline.dubbo27x.api.RestService/single/echo?message=rest-protocol)
 
-[http://localhost:9090/top.ylonline.dubbo27x.api.MultipleService/multiple/echo?message=dubbo-or-rest-protocol]
-(http://localhost:9090/top.ylonline.dubbo27x.api.MultipleService/multiple/echo?message=dubbo-or-rest-protocol)
+[http://localhost:9090/top.ylonline.dubbo27x.api.MultipleService/multiple/echo?message=dubbo-or-rest-protocol](http://localhost:9090/top.ylonline.dubbo27x.api.MultipleService/multiple/echo?message=dubbo-or-rest-protocol)
 
 > 使用接口的全限类名作为`contextpath`是dubbo-2.7.0的bug，请看[issue](https://github.com/apache/incubator-dubbo/issues/3445)，此[PR](https://github.com/apache/incubator-dubbo/pull/3479)修复了这个问题
 
