@@ -10,6 +10,11 @@
     <groupId>top.ylonline.feign</groupId>
     <artifactId>feign-examples</artifactId>
     <name>${project.artifactId}</name>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>openfeign</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
