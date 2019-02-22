@@ -5,19 +5,18 @@ server:
 spring:
   application:
     name: dubbo-consumer-2.7.x
-#dubbo:
-#  scan:
-#    base-packages: top.ylonline.dubbo27x
-#  application:
-#    name: ${spring.application.name}
-#    qos-enable: false
-#  registry:
-#    address: zookeeper://192.168.56.101:2181
-#    client: curator
-#    simplified: true
-#  metadata-report:
-#    address: ${dubbo.registry.address}
-#  consumer:
-#    check: false
-#    client: netty
-debug: true
+dubbo:
+  scan:
+    base-packages: top.ylonline.dubbo27x
+  application:
+    name: ${spring.application.name}
+    qos-enable: false
+  registry:
+    address: zookeeper://192.168.56.101:2181
+    client: curator
+    simplified: true
+  metadata-report:
+    address: ${dubbo.registry.address}
+  consumer:
+    check: false
+    client: netty
