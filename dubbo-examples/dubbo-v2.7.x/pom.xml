@@ -4,17 +4,17 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>top.ylonline.dubbo</groupId>
-        <artifactId>dubbo-example</artifactId>
+        <artifactId>dubbo-examples</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>dubbo-v2.6.x</artifactId>
+    <artifactId>dubbo-v2.7.x</artifactId>
     <name>${project.artifactId}</name>
     <packaging>pom</packaging>
 
     <modules>
-        <module>dubbo-v2.6.x-api</module>
-        <module>dubbo-v2.6.x-consumer</module>
-        <module>dubbo-v2.6.x-provider</module>
+        <module>dubbo-v2.7.x-api</module>
+        <module>dubbo-v2.7.x-consumer</module>
+        <module>dubbo-v2.7.x-provider</module>
     </modules>
 
     <properties>
@@ -22,9 +22,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <dubbo.version>2.6.5</dubbo.version>
-        <dubbo-spring-boot.version>0.2.0</dubbo-spring-boot.version>
-        <!--<dubbo-spring-boot.version>0.2.1.RELEASE</dubbo-spring-boot.version>-->
+        <dubbo.version>2.7.0</dubbo.version>
         <spring-boot.version>2.0.6.RELEASE</spring-boot.version>
     </properties>
 
@@ -44,39 +42,31 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>-->
+
+            <!-- dubbo -->
             <dependency>
-                <groupId>com.alibaba</groupId>
+                <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo</artifactId>
                 <version>${dubbo.version}</version>
                 <exclusions>
                     <exclusion>
-                        <groupId>org.jboss.netty</groupId>
-                        <artifactId>netty</artifactId>
+                        <groupId>com.google.code.gson</groupId>
+                        <artifactId>gson</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>io.netty</groupId>
+                        <artifactId>netty-all</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
+
+            <!-- dubbo spring-boot -->
             <dependency>
-                <groupId>com.alibaba.boot</groupId>
+                <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo-spring-boot-starter</artifactId>
-                <version>${dubbo-spring-boot.version}</version>
+                <version>${dubbo.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.alibaba.spring</groupId>
-                <artifactId>spring-context-support</artifactId>
-                <version>1.0.2</version>
-            </dependency>
-            <!-- Nacos -->
-            <dependency>
-                <groupId>com.alibaba.nacos</groupId>
-                <artifactId>nacos-client</artifactId>
-                <version>0.8.0</version>
-            </dependency>
-            <!-- Dubbo Nacos registry dependency -->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>dubbo-registry-nacos</artifactId>
-                <version>0.0.2</version>
-            </dependency>
+
             <!-- Dubbo zookeeper registry dependency -->
             <dependency>
                 <groupId>org.apache.zookeeper</groupId>
@@ -101,6 +91,17 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-framework</artifactId>
+                <version>2.12.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>2.12.0</version>
+            </dependency>
+
             <dependency>
                 <groupId>io.netty</groupId>
                 <artifactId>netty-all</artifactId>

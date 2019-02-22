@@ -3,19 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>top.ylonline</groupId>
-        <artifactId>java-best-practice</artifactId>
+        <groupId>top.ylonline.nacos</groupId>
+		<artifactId>nacos-examples</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>top.ylonline.gateway</groupId>
-    <artifactId>gateway-example</artifactId>
+    <artifactId>nacos-spring-cloud-example</artifactId>
     <name>${project.artifactId}</name>
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>gateway-simple</module>
-        <module>gateway-nacos</module>
-    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -42,7 +35,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
             <!-- Nacos -->
             <dependency>
                 <groupId>com.alibaba.nacos</groupId>
@@ -51,4 +43,18 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- Nacos spring-cloud -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+            <version>0.2.1.RELEASE</version>
+        </dependency>
+    </dependencies>
 </project>

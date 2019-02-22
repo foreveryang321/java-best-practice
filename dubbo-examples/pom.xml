@@ -7,14 +7,14 @@
         <artifactId>java-best-practice</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>top.ylonline.sentinel</groupId>
-    <artifactId>sentinel-example</artifactId>
+    <groupId>top.ylonline.dubbo</groupId>
+    <artifactId>dubbo-examples</artifactId>
     <name>${project.artifactId}</name>
     <packaging>pom</packaging>
 
     <modules>
-        <module>sentinel-cluster-example</module>
-        <module>sentinel-spring-cloud-example</module>
+        <module>dubbo-v2.6.x</module>
+        <module>dubbo-v2.7.x</module>
     </modules>
 
     <properties>

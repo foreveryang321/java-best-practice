@@ -4,17 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>top.ylonline.sentinel</groupId>
-        <artifactId>sentinel-example</artifactId>
+        <artifactId>sentinel-examples</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>sentinel-cluster-example</artifactId>
+    <artifactId>sentinel-spring-cloud-example</artifactId>
     <name>${project.artifactId}</name>
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>sentinel-cluster-server-alone</module>
-        <module>sentinel-cluster-client</module>
-    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -22,7 +16,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
 
         <spring-boot.version>2.0.6.RELEASE</spring-boot.version>
-        <spring-cloud.version>Finchley.SR2</spring-cloud.version>
+        <!--<spring-cloud.version>Finchley.SR2</spring-cloud.version>-->
     </properties>
 
     <dependencyManagement>
@@ -34,21 +28,43 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
+            <!--<dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-            <!-- Nacos -->
-            <dependency>
-                <groupId>com.alibaba.nacos</groupId>
-                <artifactId>nacos-client</artifactId>
-                <version>0.6.2</version>
-            </dependency>
+            </dependency>-->
         </dependencies>
     </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- sentinel -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+            <version>0.2.1.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.alibaba.csp</groupId>
+                    <artifactId>sentinel-cluster-client-default</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.alibaba.csp</groupId>
+                    <artifactId>sentinel-cluster-server-default</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.alibaba.csp</groupId>
+                    <artifactId>sentinel-dubbo-adapter</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
 
     <build>
         <finalName>${project.artifactId}</finalName>
