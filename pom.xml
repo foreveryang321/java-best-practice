@@ -16,6 +16,7 @@
         <module>gateway-examples</module>
         <module>sentinel-examples</module>
         <module>feign-examples</module>
+        <module>spring-boot-examples</module>
     </modules>
 
     <properties>
