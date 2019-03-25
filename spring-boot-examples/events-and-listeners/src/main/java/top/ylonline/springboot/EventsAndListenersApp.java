@@ -7,8 +7,8 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import top.ylonline.springboot.event.event.UserEvent;
-import top.ylonline.springboot.event.model.User;
+import top.ylonline.springboot.event.UserEvent;
+import top.ylonline.springboot.model.User;
 
 import javax.annotation.Resource;
 
@@ -21,13 +21,13 @@ import javax.annotation.Resource;
 @EnableAsync
 @RestController
 @Slf4j
-public class EventApp {
+public class EventsAndListenersApp {
     /**
      * Common
      */
     private static SpringApplicationBuilder configureSpringBuilder(SpringApplicationBuilder builder) {
         // builder.listeners(new UserEventListener());
-        return builder.sources(EventApp.class);
+        return builder.sources(EventsAndListenersApp.class);
     }
 
     /**

@@ -1,4 +1,4 @@
-package top.ylonline.springboot.event.model;
+package top.ylonline.springboot.model;
 
 import lombok.Builder;
 import lombok.Data;

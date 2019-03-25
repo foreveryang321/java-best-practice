@@ -1,6 +1,8 @@
 # spring 事件发布和监听
 > 使用事件发布和监听，最大的作用应该是为了***业务解耦***。类似的有：消息队列的发布订阅模式
 
+[spring-boot 官方文档](https://docs.spring.io/spring-boot/docs/2.0.8.RELEASE/reference/htmlsingle/#boot-features-application-events-and-listeners)
+
 比如：用户注册成功后，发送注册成功邮件、短信通知用户。
 
 ## 同步方式

@@ -4,8 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
-import top.ylonline.springboot.event.event.UserEvent;
-import top.ylonline.springboot.event.model.User;
+import top.ylonline.springboot.event.UserEvent;
+import top.ylonline.springboot.model.User;
 
 import java.util.concurrent.TimeUnit;
 
