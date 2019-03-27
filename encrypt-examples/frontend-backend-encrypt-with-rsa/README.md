@@ -14,8 +14,8 @@
 
 ## AES加解密
 
-[http://localhost:8087/demo/aes](http://localhost:8087/demo/aes)
+[http://localhost:8087/demo/aes](http://localhost:8087/demo/aes)，打开浏览器控制天查看日志输出
 
 
 ## RSA 加解密 
-[http://localhost:8087/demo/aes](http://localhost:8087/demo/aes)
+[http://localhost:8087/demo/aes](http://localhost:8087/demo/aes)，打开浏览器控制天查看日志输出
