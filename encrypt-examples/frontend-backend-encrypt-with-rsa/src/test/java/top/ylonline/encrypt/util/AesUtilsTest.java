@@ -10,7 +10,7 @@ import top.ylonline.encrypt.common.Const;
 public class AesUtilsTest {
 
     @Test
-    public void test() {
+    public void backend() {
         String str = Const.STR;
 
         String key = AesUtils.randomKey();

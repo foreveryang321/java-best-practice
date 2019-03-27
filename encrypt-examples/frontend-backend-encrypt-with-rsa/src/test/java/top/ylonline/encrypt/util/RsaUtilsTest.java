@@ -10,7 +10,7 @@ import top.ylonline.encrypt.common.Const;
 public class RsaUtilsTest {
 
     @Test
-    public void test() {
+    public void backend() {
         // 初始化 rsa，构建密钥，获取到模、私钥指数、公钥指数
         // RsaUtils.generateKeyPair();
 
