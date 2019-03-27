@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Aes 前后端加解密</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+</head>
+<body>
+<h2>Aes 后端加密，前端解密</h2>
+
+<!-- aes start -->
+<script th:src="@{/crypto-js/core.js}"></script>
+<script th:src="@{/crypto-js/enc-base64.js}"></script>
+<script th:src="@{/crypto-js/cipher-core.js}"></script>
+<script th:src="@{/crypto-js/aes.js}"></script>
+<script th:src="@{/crypto-js/mode-ecb.js}"></script>
+<!-- aes end -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function getRandom(len) {
+        var a = len || 16,
+            s = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
+            n = s.length;
+        var r = '';
+        for (var i = 0; i < a; i++) {
+            r += s.charAt(Math.floor(Math.random() * n));
+        }
+        return r;
+    }
+
+    function encryptAES(str, key) {
+        var s = CryptoJS.enc.Utf8.parse(str),
+            k = CryptoJS.enc.Utf8.parse(key),
+            c = CryptoJS.AES.encrypt(s, k, {
+                mode: CryptoJS.mode.ECB,
+                padding: CryptoJS.pad.Pkcs7
+            }),
+            // 转换为字符串
+            // return c.toString();
+            // Hex 转为十六进制
+            d = CryptoJS.enc.Hex.parse(c.ciphertext.toString());
+        // Base64 编码
+        return CryptoJS.enc.Base64.stringify(d);
+    }
+
+    function decryptAES(str, key) {
+        var k = CryptoJS.enc.Utf8.parse(key),
+            c = CryptoJS.AES.decrypt(str, k, {
+                mode: CryptoJS.mode.ECB,
+                padding: CryptoJS.pad.Pkcs7
+            });
+        // 转换为 UTF8 字符串
+        return CryptoJS.enc.Utf8.stringify(c);
+        // return c.toString(CryptoJS.enc.Utf8);
+    }
+
+    /*<![CDATA[*/
+    var str = [[${str}]];
+    var key = [[${key}]];
+    var encrypt = [[${encrypt}]];
+    /*]]>*/
+    console.log('后端传输到前端的数据 ------------>>');
+    console.table({
+        "Aes 密钥": key,
+        "原始字符串": str,
+        "加密后字符串": encrypt
+    });
+
+    console.log('前端 js 加解密测试 ------------>>');
+    var k = getRandom();
+    var e = encryptAES(str, k);
+    var d = decryptAES(e, k);
+    console.table({
+        "Aes 密钥": k,
+        "原始字符串": str,
+        "加密后字符串": e,
+        "解码后字符串": d
+    });
+    console.log('<<------------> 前端 js 加解密测试');
+    console.log('后端加密，前端解密测试 ------------>>');
+    var decrypt = decryptAES(encrypt, key);
+    console.table({
+        "Aes 密钥": key,
+        "原始字符串": str,
+        "加密后字符串": encrypt,
+        "解码后字符串": decrypt
+    });
+    console.log('<<------------> 后端加密，前端解密测试');
+</script>
+</body>
+</html>

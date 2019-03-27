@@ -17,6 +17,7 @@
         <module>sentinel-examples</module>
         <module>feign-examples</module>
         <module>spring-boot-examples</module>
+        <module>encrypt-examples</module>
     </modules>
 
     <properties>

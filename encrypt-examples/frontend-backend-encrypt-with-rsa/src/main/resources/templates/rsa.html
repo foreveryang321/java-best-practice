@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Rsa 前后端加解密</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+</head>
+<body>
+<h2>Rsa 前后端加解密</h2>
+
+<!-- rsa start -->
+<script th:src="@{/rsa.min.js}"></script>
+<!-- rsa end -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var n = [[${modulus}]];
+    var e = [[${publicExponent}]];
+    var d = [[${privateExponent}]];
+    var str = [[${str}]];
+    var encrypt = [[${encrypt}]];
+    /*]]>*/
+    console.log('后端传输到前端的数据 ------------>>');
+    console.table({
+        "Rsa 模": n,
+        "Rsa 公钥": e,
+        "Rsa 私钥": d,
+        "原始字符串": str,
+        "Rsa 私钥加密密文": encrypt
+    });
+
+    console.log('前端 js 测试：公钥加密，私钥解密');
+    var encryptR = encryptRSA(e, n, str);
+    var decryptR = decryptRSA(d, n, encryptR);
+    console.table({
+        "公钥加密": encrypt,
+        "私钥解密": decryptR
+    });
+
+    console.log('前端 js 测试：私钥加密，公钥解密');
+    encryptR = encryptRSA(d, n, str);
+    decryptR = decryptRSA(e, n, encryptR);
+    console.table({
+        "私钥加密": encryptR,
+        "公钥解密": decryptR
+    });
+
+    console.log('后端：私钥加密，前端：公钥解密');
+    decryptR = decryptRSA(e, n, encrypt);
+    console.table({
+        "后端：私钥加密": encrypt,
+        "前端：公钥解密": decryptR
+    });
+</script>
+</body>
+</html>
