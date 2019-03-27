@@ -33,7 +33,7 @@
     var encryptR = encryptRSA(e, n, str);
     var decryptR = decryptRSA(d, n, encryptR);
     console.table({
-        "公钥加密": encrypt,
+        "公钥加密": encryptR,
         "私钥解密": decryptR
     });
 

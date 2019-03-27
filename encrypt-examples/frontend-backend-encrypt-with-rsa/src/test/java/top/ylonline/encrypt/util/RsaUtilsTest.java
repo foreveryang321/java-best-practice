@@ -15,7 +15,7 @@ public class RsaUtilsTest {
         // RsaUtils.generateKeyPair();
 
         String str = Const.STR;
-        
+
         // 模
         String modulus = Const.MODULUS;
         // 私钥指数
@@ -36,5 +36,17 @@ public class RsaUtilsTest {
         decrypt = RsaUtils.decryptPrivate(modulus, privateExponent, encrypt);
         System.out.println("decrypt: " + decrypt);
         Assert.assertEquals(str, decrypt);
+    }
+
+    /**
+     * 前端公钥加密，后端私钥解密
+     */
+    @Test
+    public void frontend() {
+        String encrypt =
+                "60ffccfdc632d0f42a73db72e29ebfd55263701791f4eea1c6de0594cbf07fd39443360e51bd2cd6f0d10a9438eb34203eb425394fe62aa4b2d62a7fe2c92b33eb9b79840a2ae2c18d575970d225ebb92e037c5f81a7d58673bbe7ad283e0f15e82bc526cc43575442bd7ebcf478dd1b7be7535adf3aa3c4c2f1b43d262bc910";
+        String decrypt = RsaUtils.decryptPrivate(Const.MODULUS, Const.PRIVATE_EXPONENT, encrypt);
+        System.out.println("decrypt: " + decrypt);
+        Assert.assertEquals(Const.STR, decrypt);
     }
 }

@@ -7,7 +7,7 @@ public class Const {
     /**
      * 原始字符串：明文
      */
-    public static final String STR = "数据的了发送1221313sjdflsjf";
+    public static final String STR = "测试123abc";
 
     /**
      * rsa 模
