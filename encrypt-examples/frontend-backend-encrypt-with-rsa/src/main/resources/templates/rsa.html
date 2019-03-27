@@ -13,6 +13,39 @@
 <script th:src="@{/rsa.min.js}"></script>
 <!-- rsa end -->
 <script th:inline="javascript">
+    /**
+     * RSA 加密数据：返回加密后的字符串
+     * <p>e 公匙
+     * <p>n 模
+     * <p>s 要加密的字符串
+     */
+    function encryptRSA(e, n, s) {
+        RSAUtils.setMaxDigits(130);
+        var keyPair = RSAUtils.getKeyPair(e, '', n);
+        // URI 编码
+        s = window.encodeURIComponent(s);
+        // 反转
+        s = s.split("").reverse().join("");
+        return RSAUtils.encryptedString(keyPair, s);
+    }
+
+    /**
+     * RSA 解密数据：返回解密后的字符串
+     * <p>e 公匙
+     * <p>n 模
+     * <p>s 要解密的字符串
+     */
+    function decryptRSA(e, n, s) {
+        RSAUtils.setMaxDigits(130);
+        var keyPair = RSAUtils.getKeyPair('', e, n);
+        s = RSAUtils.decryptedString(keyPair, s);
+        // 反转
+        s = s.split("").reverse().join("");
+        // URI 解码
+        return window.decodeURIComponent(s);
+    }
+</script>
+<script th:inline="javascript">
     /*<![CDATA[*/
     var n = [[${modulus}]];
     var e = [[${publicExponent}]];
