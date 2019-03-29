@@ -1,12 +1,5 @@
 spring:
   redis:
-    host: redis-tst01.ctim
-    port: 26379
+    host: localhsot
+    port: 6379
     timeout: 1000
-    password: IM-redis@test.env
-    jedis:
-      pool:
-        max-active: 8
-        max-idle: 8
-        min-idle: 0
-        max-wait: 1
