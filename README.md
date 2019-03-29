@@ -42,4 +42,5 @@ Java 的一些学习例子，最佳实践
 
 > Spring
 - [events-and-listeners](spring-boot-examples/events-and-listeners) Spring 事件发布和监听
-- [redis-v2.0](spring-boot-examples/redis-v2.0) 自定义 CacheExpire 注解，实现 redis 缓存的过期时间配置
+- [redis-v2.0](spring-boot-examples/redis-v2.0) 、[redis-v1](spring-boot-examples/redis-v1)自定义 CacheExpire 注解，实现 redis 
+缓存的过期时间配置

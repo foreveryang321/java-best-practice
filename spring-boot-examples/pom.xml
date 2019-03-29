@@ -15,6 +15,7 @@
     <modules>
         <module>events-and-listeners</module>
         <module>redis-v2.0</module>
+        <module>redis-v1</module>
     </modules>
 
     <properties>

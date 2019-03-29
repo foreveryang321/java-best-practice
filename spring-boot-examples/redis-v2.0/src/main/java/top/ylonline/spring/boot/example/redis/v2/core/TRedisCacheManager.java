@@ -31,8 +31,8 @@ import java.util.Map;
 /**
  * redis 缓存管理器
  * <pre>
- *     support spring-data-redis 1.8.10.RELEASE
- *     not support spring-data-redis 2.0.0.RELEASE +
+ *     not support spring-data-redis 1.8.10.RELEASE
+ *     support spring-data-redis 2.0.0.RELEASE +
  * </pre>
  * 解决的问题：
  * <pre>

@@ -1,4 +1,4 @@
-package top.ylonline.spring.boot.example.redis.v2.core;
+package top.ylonline.spring.boot.example.redis.v1.core;
 
 import org.springframework.context.annotation.Import;
 
