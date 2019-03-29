@@ -1,7 +1,7 @@
-package top.ylonline.springboot.event;
+package top.ylonline.spring.boot.example.el.event;
 
 import org.springframework.context.ApplicationEvent;
-import top.ylonline.springboot.model.User;
+import top.ylonline.spring.boot.example.el.domain.User;
 
 /**
  * @author YL

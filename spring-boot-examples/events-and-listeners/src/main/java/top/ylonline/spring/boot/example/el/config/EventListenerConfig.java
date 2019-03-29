@@ -1,11 +1,11 @@
-package top.ylonline.springboot.config;
+package top.ylonline.spring.boot.example.el.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
-import top.ylonline.springboot.event.UserEvent;
-import top.ylonline.springboot.model.User;
+import top.ylonline.spring.boot.example.el.event.UserEvent;
+import top.ylonline.spring.boot.example.el.domain.User;
 
 import java.util.concurrent.TimeUnit;
 

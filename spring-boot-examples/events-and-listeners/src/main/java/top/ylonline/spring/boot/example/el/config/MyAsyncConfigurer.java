@@ -1,4 +1,4 @@
-package top.ylonline.springboot.config;
+package top.ylonline.spring.boot.example.el.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

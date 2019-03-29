@@ -1,4 +1,4 @@
-package top.ylonline.springboot.model;
+package top.ylonline.spring.boot.example.el.domain;
 
 import lombok.Builder;
 import lombok.Data;

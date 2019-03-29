@@ -1,4 +1,4 @@
-package top.ylonline.springboot;
+package top.ylonline.spring.boot.example.el;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,8 +7,8 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import top.ylonline.springboot.event.UserEvent;
-import top.ylonline.springboot.model.User;
+import top.ylonline.spring.boot.example.el.event.UserEvent;
+import top.ylonline.spring.boot.example.el.domain.User;
 
 import javax.annotation.Resource;
 

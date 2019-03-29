@@ -1,4 +1,4 @@
-package top.ylonline.springboot.listener;// package top.ylonline.springboot.event.listener;
+package top.ylonline.spring.boot.example.el.listener;// package top.ylonline.springboot.event.listener;
 //
 // import lombok.extern.slf4j.Slf4j;
 // import org.springframework.context.ApplicationListener;
