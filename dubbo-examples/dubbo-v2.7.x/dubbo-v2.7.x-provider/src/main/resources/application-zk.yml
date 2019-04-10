@@ -13,10 +13,10 @@ dubbo:
     simplified: true
   metadata-report:
     address: ${dubbo.registry.address}
-  #  protocol:
+#  protocol:
 #    name: dubbo
-#    port: 20880
-#    server: netty4
+#    port: -1
+#    server: netty
 #  protocol:
 #    name: rest
 #    port: 9090
