@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: dubbo-sca-consumer
+---
+spring:
+  profiles: zk
+  cloud:
+    zookeeper:
+      enabled: true
+      connect-string: 192.168.56.101:2181

@@ -1,0 +1,32 @@
+server:
+  port: 0
+dubbo:
+#  scan:
+#    base-packages:
+#      - top.ylonline.dubbo.sca
+#      - top.ylonline.dubbo.sca.service
+  application:
+    name: dubbo-sca-consumer
+    qos:
+      enable: false
+      port: 33333
+      accept:
+        foreign:
+          ip: false
+  registry:
+    address: spring-cloud://localhost
+#  protocol:
+#    name: dubbo
+#    port: -1
+#  protocols:
+#    dubbo:
+#      name: dubbo
+#      port: -1
+#    rest:
+#      name: rest
+#      port: 8081
+#      server: netty
+
+  cloud:
+    # The subscribed services in consumer side
+    subscribed-services: dubbo-sca-provider

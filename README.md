@@ -24,10 +24,6 @@ Java 的一些学习例子，最佳实践
 - [gateway-nacos](gateway-examples/gateway-nacos) gateway 实现动态路由规则：Nacos 配置中心
 
 
-> spring-webflux
-- [spring-webflux-example](spring-webflux-example) webflux 简单入门，提供堵塞、响应式对比
-
-
 > feign-examples
 - 无
 
@@ -40,7 +36,8 @@ Java 的一些学习例子，最佳实践
 - [frontend-backend-encrypt-with-rsa](encrypt-examples/frontend-backend-encrypt-with-rsa) 前后端分离数据加密传输
 
 
-> Spring
-- [events-and-listeners](spring-boot-examples/events-and-listeners) Spring 事件发布和监听
-- [redis-v2.0](spring-boot-examples/redis-v2.0) 、[redis-v1](spring-boot-examples/redis-v1)自定义 CacheExpire 注解，实现 redis 
+> Spring Boot
+- [events-and-listeners](sb-examples/events-and-listeners) Spring 事件发布和监听
+- [redis-v2.0](sb-examples/redis-v2.0) 、[redis-v1](sb-examples/redis-v1)自定义 CacheExpire 注解，实现 redis 
 缓存的过期时间配置
+- [webflux](sb-examples/webflux) webflux 简单入门，提供堵塞、响应式对比

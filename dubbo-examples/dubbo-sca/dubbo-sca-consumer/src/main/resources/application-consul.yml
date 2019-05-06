@@ -1,0 +1,18 @@
+server:
+  port: 8080
+feign:
+  hystrix:
+    enabled: true
+dubbo:
+#  scan:
+#    base-packages: top.ylonline.dubbo.sca.service
+  registry:
+    address: spring-cloud://localhost
+  protocols:
+    dubbo:
+      name: dubbo
+      port: -1
+    rest:
+      name: rest
+      port: 8081
+      server: netty

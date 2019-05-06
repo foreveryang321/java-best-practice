@@ -1,0 +1,32 @@
+feign:
+  hystrix:
+    enabled: true
+dubbo:
+  application:
+    name: dubbo-sca-provider
+    qos-enable: true
+    qos-port: 33333
+  #    qos:
+#      enable: true
+  #    qos:
+#       enable: false
+#       port: 33333
+#       accept:
+#         foreign:
+#           ip: false
+  registry:
+    address: spring-cloud://localhost
+  config:
+    multiple: true
+#  protocol:
+#    name: dubbo
+#    port: -1
+  protocols:
+    dubbo:
+      name: dubbo
+      port: -1
+    rest:
+      name: rest
+      port: 8081
+      server: netty
+

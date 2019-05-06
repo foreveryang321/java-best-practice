@@ -1,0 +1,5 @@
+spring:
+  redis:
+    host: localhsot
+    port: 6379
+    timeout: 1000

@@ -27,8 +27,8 @@ public class NacosDatasourceInitFunc implements InitFunc {
     private static final String FLOW_DATA_ID_POSTFIX = APP_NAME + "-flow-rules";
     private static final String PARAMETER_FLOW_DATA_ID_POSTFIX = APP_NAME + "-parameter-flow-rules";
 
-    private static final String CLUSTER_SERVER_NAMESPACE_DATA_ID_POSTFIX = "-server-namespace-config";
-    private static final String CLUSTER_SERVER_TRANSPORT_DATA_ID_POSTFIX = "-server-transport-config";
+    private static final String CLUSTER_SERVER_NAMESPACE_DATA_ID_POSTFIX = APP_NAME + "-server-namespace-config";
+    private static final String CLUSTER_SERVER_TRANSPORT_DATA_ID_POSTFIX = APP_NAME + "-server-transport-config";
 
     @Override
     public void init() throws Exception {
@@ -73,7 +73,7 @@ public class NacosDatasourceInitFunc implements InitFunc {
         ReadableDataSource<String, Set<String>> namespaceDS = new NacosDataSource<>(
                 SERVER_ADDR,
                 GROUP_ID,
-                AppNameUtil.getAppName() + CLUSTER_SERVER_NAMESPACE_DATA_ID_POSTFIX,
+                CLUSTER_SERVER_NAMESPACE_DATA_ID_POSTFIX,
                 source -> JSON.parseObject(source, new TypeReference<Set<String>>() {
                 })
         );
@@ -83,7 +83,7 @@ public class NacosDatasourceInitFunc implements InitFunc {
         ReadableDataSource<String, ServerTransportConfig> transportDS = new NacosDataSource<>(
                 SERVER_ADDR,
                 GROUP_ID,
-                AppNameUtil.getAppName() + CLUSTER_SERVER_TRANSPORT_DATA_ID_POSTFIX,
+                CLUSTER_SERVER_TRANSPORT_DATA_ID_POSTFIX,
                 source -> JSON.parseObject(source, new TypeReference<ServerTransportConfig>() {
                 })
         );
