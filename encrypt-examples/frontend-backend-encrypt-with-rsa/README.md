@@ -20,4 +20,4 @@
 
 
 ## RSA 加解密 
-[http://localhost:8087/demo/aes](http://localhost:8087/demo/aes)，打开浏览器控制台查看日志输出
+[http://localhost:8087/demo/rsa](http://localhost:8087/demo/rsa)，打开浏览器控制台查看日志输出
