@@ -2,12 +2,12 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Aes 前后端加解密</title>
+    <title>RSA + AES 前后端加解密</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
 </head>
 <body>
-<h2>Aes 后端加密，前端解密</h2>
+<h2>RSA + AES 前后端加解密</h2>
 
 <!-- aes start -->
 <script th:src="@{/crypto-js/core.js}"></script>
@@ -54,39 +54,82 @@
     }
 </script>
 <!-- aes end -->
+<!-- rsa start -->
+<script th:src="@{/rsa.min.js}"></script>
+<script th:inline="javascript">
+    /**
+     * RSA 加密数据：返回加密后的字符串
+     * <p>e 公匙
+     * <p>n 模
+     * <p>s 要加密的字符串
+     */
+    function encryptRSA(e, n, s) {
+        RSAUtils.setMaxDigits(130);
+        var keyPair = RSAUtils.getKeyPair(e, '', n);
+        // URI 编码
+        s = window.encodeURIComponent(s);
+        // 反转
+        s = s.split("").reverse().join("");
+        return RSAUtils.encryptedString(keyPair, s);
+    }
+
+    /**
+     * RSA 解密数据：返回解密后的字符串
+     * <p>e 公匙
+     * <p>n 模
+     * <p>s 要解密的字符串
+     */
+    function decryptRSA(e, n, s) {
+        RSAUtils.setMaxDigits(130);
+        var keyPair = RSAUtils.getKeyPair('', e, n);
+        s = RSAUtils.decryptedString(keyPair, s);
+        // 反转
+        s = s.split("").reverse().join("");
+        // URI 解码
+        return window.decodeURIComponent(s);
+    }
+</script>
+<!-- rsa end -->
 <script th:inline="javascript">
     /*<![CDATA[*/
+    var n = [[${modulus}]];
+    var e = [[${publicExponent}]];
+    var d = [[${privateExponent}]];
     var str = [[${str}]];
-    var key = [[${key}]];
-    var encrypt = [[${encrypt}]];
+    var encryptData = [[${encryptData}]];
+    var encryptAesKey = [[${encryptAesKey}]];
     /*]]>*/
     console.log('后端传输到前端的数据 ------------>>');
     console.table({
-        "Aes 密钥": key,
+        "Rsa 模": n,
+        "Rsa 公钥": e,
+        "Rsa 私钥": d,
         "原始字符串": str,
-        "加密后字符串": encrypt
+        "Rsa 私钥加密密文": encrypt
     });
 
-    console.log('前端 js 加解密测试 ------------>>');
-    var k = getRandom();
-    var e = encryptAES(str, k);
-    var d = decryptAES(e, k);
+    console.log('前端 js 测试：公钥加密，私钥解密');
+    var encryptR = encryptRSA(e, n, str);
+    var decryptR = decryptRSA(d, n, encryptR);
     console.table({
-        "Aes 密钥": k,
-        "原始字符串": str,
-        "加密后字符串": e,
-        "解码后字符串": d
+        "公钥加密": encryptR,
+        "私钥解密": decryptR
     });
-    console.log('<<------------> 前端 js 加解密测试');
-    console.log('后端加密，前端解密测试 ------------>>');
-    var decrypt = decryptAES(encrypt, key);
+
+    console.log('前端 js 测试：私钥加密，公钥解密');
+    encryptR = encryptRSA(d, n, str);
+    decryptR = decryptRSA(e, n, encryptR);
     console.table({
-        "Aes 密钥": key,
-        "原始字符串": str,
-        "加密后字符串": encrypt,
-        "解码后字符串": decrypt
+        "私钥加密": encryptR,
+        "公钥解密": decryptR
     });
-    console.log('<<------------> 后端加密，前端解密测试');
+
+    console.log('后端：私钥加密，前端：公钥解密');
+    decryptR = decryptRSA(e, n, encrypt);
+    console.table({
+        "后端：私钥加密": encrypt,
+        "前端：公钥解密": decryptR
+    });
 </script>
 </body>
 </html>

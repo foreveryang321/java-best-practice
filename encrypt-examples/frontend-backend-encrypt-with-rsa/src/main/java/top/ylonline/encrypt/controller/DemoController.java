@@ -37,4 +37,21 @@ public class DemoController {
         model.addAttribute("encrypt", RsaUtils.encryptPrivate(Const.MODULUS, Const.PRIVATE_EXPONENT, Const.STR));
         return "rsa";
     }
+
+    @GetMapping("/rsa-and-aes")
+    public String rsaAndAes(Model model) {
+        String aesKey = "";
+        model.addAttribute("str", Const.STR);
+        model.addAttribute("modulus", Const.MODULUS);
+        // todo 私钥禁止传到前端（这里是为了测试），公钥可以传到前端
+        model.addAttribute("privateExponent", Const.PRIVATE_EXPONENT);
+        model.addAttribute("publicExponent", Const.PUBLIC_EXPONENT);
+
+        // aes 加密数据
+        model.addAttribute("encryptData", AesUtils.encrypt(aesKey, "UTF-8", Const.STR));
+
+        // rsa 加密 aes 密钥
+        model.addAttribute("encryptAesKey", RsaUtils.encryptPrivate(Const.MODULUS, Const.PRIVATE_EXPONENT, aesKey));
+        return "rsa-and-aes";
+    }
 }

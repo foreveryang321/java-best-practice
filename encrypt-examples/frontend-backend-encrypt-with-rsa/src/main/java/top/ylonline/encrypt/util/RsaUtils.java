@@ -229,12 +229,13 @@ public class RsaUtils {
             Cipher cipher = Cipher.getInstance(ALGORITHM, BC);
             cipher.init(Cipher.ENCRYPT_MODE, key);
             // 127
-            int blockSize = cipher.getBlockSize();// 获得加密块大小，如：加密前数据为128个byte，而key_size=1024
+            // 获得加密块大小，如：加密前数据为128个byte，而key_size=1024
+            int blockSize = cipher.getBlockSize();
             // 加密块大小为127
-            // byte,加密后为128个byte;因此共有2个加密块，第一个127
-            // byte第二个为1个byte
+            // byte,加密后为128个byte;因此共有2个加密块，第一个127，第二个为1个byte
             int length = data.length;
-            int outputSize = cipher.getOutputSize(length);// 获得加密块加密后块大小
+            // 获得加密块加密后块大小
+            int outputSize = cipher.getOutputSize(length);
             int leavedSize = length % blockSize;
             int blocksSize = leavedSize != 0 ? length / blockSize + 1 : length / blockSize;
             byte[] raw = new byte[outputSize * blocksSize];
