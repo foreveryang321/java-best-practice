@@ -20,12 +20,11 @@
      * <p>s 要加密的字符串
      */
     function encryptRSA(e, n, s) {
-        RSAUtils.setMaxDigits(130);
         var keyPair = RSAUtils.getKeyPair(e, '', n);
         // URI 编码
         s = window.encodeURIComponent(s);
         // 反转
-        s = s.split("").reverse().join("");
+        s = RSAUtils.reverseStr(s);
         return RSAUtils.encryptedString(keyPair, s);
     }
 
@@ -36,11 +35,10 @@
      * <p>s 要解密的字符串
      */
     function decryptRSA(e, n, s) {
-        RSAUtils.setMaxDigits(130);
         var keyPair = RSAUtils.getKeyPair('', e, n);
         s = RSAUtils.decryptedString(keyPair, s);
         // 反转
-        s = s.split("").reverse().join("");
+        s = RSAUtils.reverseStr(s);
         // URI 解码
         return window.decodeURIComponent(s);
     }
