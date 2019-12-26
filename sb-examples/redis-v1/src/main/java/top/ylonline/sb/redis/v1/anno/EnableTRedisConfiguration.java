@@ -1,4 +1,4 @@
-package top.ylonline.sb.redis.v1.cache;
+package top.ylonline.sb.redis.v1.anno;
 
 import org.springframework.context.annotation.Import;
 import top.ylonline.sb.redis.v1.TRedisAutoConfiguration;

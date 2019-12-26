@@ -21,7 +21,7 @@ import redis.clients.jedis.JedisPoolConfig;
 import top.ylonline.common.cache.interceptor.TCacheErrorHandler;
 import top.ylonline.common.cache.interceptor.TCacheResolver;
 import top.ylonline.common.cache.interceptor.TKeyGenerator;
-import top.ylonline.sb.redis.v1.core.TRedisCacheManager;
+import top.ylonline.sb.redis.v1.cache.TRedisCacheManager;
 
 /**
  * 初始化 Redis 相关 Bean

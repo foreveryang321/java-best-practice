@@ -1,4 +1,4 @@
-package top.ylonline.sb.redis.v1.core;
+package top.ylonline.sb.redis.v1.cache;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;

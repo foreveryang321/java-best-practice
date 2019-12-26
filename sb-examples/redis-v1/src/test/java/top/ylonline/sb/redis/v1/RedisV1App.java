@@ -2,7 +2,7 @@ package top.ylonline.sb.redis.v1;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import top.ylonline.sb.redis.v1.cache.EnableTRedisConfiguration;
+import top.ylonline.sb.redis.v1.anno.EnableTRedisConfiguration;
 
 /**
  * Hello world!
