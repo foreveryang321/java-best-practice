@@ -38,6 +38,6 @@ Java 的一些学习例子，最佳实践
 
 > Spring Boot
 - [events-and-listeners](sb-examples/events-and-listeners) Spring 事件发布和监听
-- [redis-v2.0](sb-examples/redis-v2.0) 、[redis-v1](sb-examples/redis-v1)自定义 CacheExpire 注解，实现 redis 
-缓存的过期时间配置
+- [redis-v2.0](sb-examples/redis-v2.0) 、[redis-v1](sb-examples/redis-v1)自定义 Expired 注解，实现 redis 
+缓存的过期时间配置，并支持 SpEL 表达式配置动态过期时间
 - [webflux](sb-examples/webflux) webflux 简单入门，提供堵塞、响应式对比
