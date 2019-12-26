@@ -10,15 +10,19 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.data.redis.cache.RedisCache;
 import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.cache.RedisCachePrefix;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.util.ReflectionUtils;
-import top.ylonline.sb.redis.v1.cache.CacheExpire;
-import top.ylonline.sb.redis.v1.cache.CacheUtils;
+import top.ylonline.common.cache.annotation.Expired;
+import top.ylonline.common.cache.util.CacheUtils;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * redis 缓存管理器
@@ -36,20 +40,29 @@ import java.util.Map;
  * @author YL
  */
 @Slf4j
-class TRedisCacheManager extends RedisCacheManager implements ApplicationContextAware, InitializingBean {
+public class TRedisCacheManager extends RedisCacheManager implements ApplicationContextAware, InitializingBean {
     private ApplicationContext applicationContext;
 
     private Map<String, Long> expires = new LinkedHashMap<>();
 
-    TRedisCacheManager(RedisOperations redisOperations) {
+    public TRedisCacheManager(RedisOperations redisOperations) {
         super(redisOperations);
         log.info("Initialize RedisCacheManager. redisOperations: {}", redisOperations);
     }
 
     @Override
     public Cache getCache(String name) {
-        Cache cache = super.getCache(name);
-        return new TRedisCacheWrapper(cache);
+        return super.getCache(name);
+    }
+
+    @Override
+    protected RedisCache getMissingCache(String name) {
+        long expiration = this.computeTtl(name);
+        boolean usePrefix = this.isUsePrefix();
+        RedisCachePrefix cachePrefix = this.getCachePrefix();
+        RedisOperations redisOperations = this.getRedisOperations();
+        return new RedisCache(name, usePrefix ? cachePrefix.prefix(name) : null, redisOperations,
+                expiration, false);
     }
 
     @Override
@@ -61,7 +74,7 @@ class TRedisCacheManager extends RedisCacheManager implements ApplicationContext
     public void afterPropertiesSet() {
         String[] beanNames = applicationContext.getBeanNamesForType(Object.class);
         for (String beanName : beanNames) {
-            Class clazz = applicationContext.getType(beanName);
+            Class<?> clazz = applicationContext.getType(beanName);
             doWith(clazz);
         }
         //设置有效期
@@ -70,25 +83,25 @@ class TRedisCacheManager extends RedisCacheManager implements ApplicationContext
         }
     }
 
-    private void doWith(final Class clazz) {
+    private void doWith(final Class<?> clazz) {
         ReflectionUtils.doWithMethods(clazz, method -> {
-            CacheExpire cacheExpire = AnnotationUtils.findAnnotation(method, CacheExpire.class);
+            Expired expired = AnnotationUtils.findAnnotation(method, Expired.class);
             // cacheNames 配置优先级：Cacheable > Caching > CacheConfig
             Cacheable cacheable = AnnotationUtils.findAnnotation(method, Cacheable.class);
             Caching caching = AnnotationUtils.findAnnotation(method, Caching.class);
             CacheConfig cacheConfig = AnnotationUtils.findAnnotation(clazz, CacheConfig.class);
 
             List<String> cacheNames = CacheUtils.getCacheNames(cacheable, caching, cacheConfig);
-            putExpires(cacheNames, cacheExpire);
-        }, method -> AnnotationUtils.findAnnotation(method, CacheExpire.class) != null);
+            add(cacheNames, expired);
+        }, method -> AnnotationUtils.findAnnotation(method, Expired.class) != null);
     }
 
-    private void putExpires(List<String> cacheNames, CacheExpire cacheExpire) {
+    private void add(List<String> cacheNames, Expired expired) {
         for (String cacheName : cacheNames) {
             if (cacheName == null || "".equals(cacheName.trim())) {
                 continue;
             }
-            long expire = cacheExpire.value();
+            long expire = expired.value();
             if (log.isDebugEnabled()) {
                 log.debug("cacheNames: {}, expire: {}s", cacheNames, expire);
             }
@@ -98,5 +111,15 @@ class TRedisCacheManager extends RedisCacheManager implements ApplicationContext
                 log.warn("{} use default expiration.", cacheName);
             }
         }
+    }
+
+    Pattern pattern = Pattern.compile("\\.exp_(\\d+)");
+
+    private long computeTtl(String cacheName) {
+        Matcher matcher = pattern.matcher(cacheName);
+        if (matcher.find()) {
+            return Long.parseLong(matcher.group(1));
+        }
+        return this.computeExpiration(cacheName);
     }
 }

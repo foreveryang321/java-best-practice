@@ -1,12 +1,15 @@
-package top.ylonline.sb.redis.v1.core;
+package top.ylonline.sb.redis.v1;
 
 import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.interceptor.CacheErrorHandler;
+import org.springframework.cache.interceptor.CacheResolver;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +18,10 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.JedisPoolConfig;
+import top.ylonline.common.cache.interceptor.TCacheErrorHandler;
+import top.ylonline.common.cache.interceptor.TCacheResolver;
+import top.ylonline.common.cache.interceptor.TKeyGenerator;
+import top.ylonline.sb.redis.v1.core.TRedisCacheManager;
 
 /**
  * 初始化 Redis 相关 Bean
@@ -26,8 +33,7 @@ import redis.clients.jedis.JedisPoolConfig;
  * @author YL
  */
 @Configuration
-@EnableConfigurationProperties(RedisProperties.class)
-// 加上这个注解是为了支持 @Cacheable、@CachePut、@CacheEvict 等缓存注解
+@EnableConfigurationProperties({RedisProperties.class, CacheProperties.class})
 @EnableCaching(proxyTargetClass = true)
 @Slf4j
 public class TRedisAutoConfiguration extends CachingConfigurerSupport {
@@ -101,6 +107,16 @@ public class TRedisAutoConfiguration extends CachingConfigurerSupport {
     @Override
     public KeyGenerator keyGenerator() {
         return new TKeyGenerator();
+    }
+
+    @Override
+    public CacheResolver cacheResolver() {
+        return new TCacheResolver(cacheManager());
+    }
+
+    @Override
+    public CacheErrorHandler errorHandler() {
+        return new TCacheErrorHandler();
     }
 
     /**

@@ -14,15 +14,25 @@ import javax.annotation.Resource;
  * Unit test for simple App.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = RedisV2App.class)
 public class RedisV2AppTest {
 
     @Resource
     private UserService userService;
 
     @Test
-    public void getUser() {
-        User user = userService.getUser(2L, "F", "L");
+    public void normal() {
+        User user = userService.getUser(1L, "cache", "normal");
+        System.out.println(user.toString());
+        Assert.assertEquals(1, user.getId().longValue());
+    }
+
+    /**
+     * 动态配置过期时间
+     */
+    @Test
+    public void dynamicTTL() {
+        User user = userService.getUser(2L, "cache", "dynamicTTL", 900L);
         System.out.println(user.toString());
         Assert.assertEquals(2, user.getId().longValue());
     }

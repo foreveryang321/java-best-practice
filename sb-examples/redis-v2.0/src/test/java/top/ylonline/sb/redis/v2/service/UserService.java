@@ -2,8 +2,8 @@ package top.ylonline.sb.redis.v2.service;
 
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import top.ylonline.common.cache.annotation.Expired;
 import top.ylonline.sb.redis.v2.domain.User;
-import top.ylonline.sb.redis.v2.cache.CacheExpire;
 
 /**
  * @author YL
@@ -11,11 +11,26 @@ import top.ylonline.sb.redis.v2.cache.CacheExpire;
 @Service
 public class UserService {
 
+    /**
+     * 指定具体过期时间
+     */
     @Cacheable(
             value = "redis.v2.test",
             unless = "#result == null")
-    @CacheExpire(120)
+    @Expired(300)
     public User getUser(Long id, String firstName, String lastName) {
         return new User(id, firstName, lastName);
     }
+
+    /**
+     * SpEL 动态配置过期时间
+     */
+    @Cacheable(
+            value = "redis.v2.test.ttl",
+            unless = "#result == null")
+    @Expired(spEl = "#ttl")
+    public User getUser(Long id, String firstName, String lastName, long ttl) {
+        return new User(id, firstName, lastName);
+    }
+
 }
