@@ -80,21 +80,23 @@ public class TRedisAutoConfiguration extends CachingConfigurerSupport {
         // 如果 KeySerializer 或者 ValueSerializer 没有配置，则对应的 KeySerializer、ValueSerializer 才使用这个 Serializer
         template.setDefaultSerializer(fastSerializer);
 
-        log.info("redis: {}", redisConnectionFactory);
-        if (redisConnectionFactory instanceof LettuceConnectionFactory) {
-            LettuceConnectionFactory factory = (LettuceConnectionFactory) redisConnectionFactory;
-            log.info("spring.redis.database: {}", factory.getDatabase());
-            log.info("spring.redis.host: {}", factory.getHostName());
-            log.info("spring.redis.port: {}", factory.getPort());
-            log.info("spring.redis.timeout: {}", factory.getTimeout());
-            log.info("spring.redis.password: {}", factory.getPassword());
-        } else if (redisConnectionFactory instanceof JedisConnectionFactory) {
-            JedisConnectionFactory factory = (JedisConnectionFactory) redisConnectionFactory;
-            log.info("spring.redis.database: {}", factory.getDatabase());
-            log.info("spring.redis.host: {}", factory.getHostName());
-            log.info("spring.redis.port: {}", factory.getPort());
-            log.info("spring.redis.timeout: {}", factory.getTimeout());
-            log.info("spring.redis.password: {}", factory.getPassword());
+        if (log.isInfoEnabled()) {
+            log.info("redis: {}", redisConnectionFactory);
+            if (redisConnectionFactory instanceof LettuceConnectionFactory) {
+                LettuceConnectionFactory factory = (LettuceConnectionFactory) redisConnectionFactory;
+                log.info("spring.redis.database: {}", factory.getDatabase());
+                log.info("spring.redis.host: {}", factory.getHostName());
+                log.info("spring.redis.port: {}", factory.getPort());
+                log.info("spring.redis.timeout: {}", factory.getTimeout());
+                log.info("spring.redis.password: {}", factory.getPassword());
+            } else if (redisConnectionFactory instanceof JedisConnectionFactory) {
+                JedisConnectionFactory factory = (JedisConnectionFactory) redisConnectionFactory;
+                log.info("spring.redis.database: {}", factory.getDatabase());
+                log.info("spring.redis.host: {}", factory.getHostName());
+                log.info("spring.redis.port: {}", factory.getPort());
+                log.info("spring.redis.timeout: {}", factory.getTimeout());
+                log.info("spring.redis.password: {}", factory.getPassword());
+            }
         }
         // factory
         template.setConnectionFactory(redisConnectionFactory);
@@ -125,7 +127,11 @@ public class TRedisAutoConfiguration extends CachingConfigurerSupport {
 
     /**
      * 配置 RedisCacheManager，使用 cache 注解管理 redis 缓存
+     * <pre>
+     *     这里一定要加上&#64;{@link Bean}注解
+     * </pre>
      */
+    @Bean
     @Override
     public CacheManager cacheManager() {
         // 初始化一个 nonLocking RedisCacheWriter
