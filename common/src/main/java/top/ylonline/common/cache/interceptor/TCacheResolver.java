@@ -80,7 +80,7 @@ public class TCacheResolver extends AbstractCacheResolver {
         }
         Expression expression = parser.parseExpression(expired.spEl());
         Long ttl = expression.getValue(eval, Long.class);
-        if (ttl != null && ttl <= 0) {
+        if (ttl == null || ttl <= 0) {
             return cacheNames;
         }
         Set<String> names = new HashSet<>();
