@@ -75,22 +75,24 @@ public class TRedisAutoConfiguration extends CachingConfigurerSupport {
         template.setDefaultSerializer(FAST_SERIALIZER);
 
         JedisConnectionFactory factory = (JedisConnectionFactory) redisConnectionFactory;
-        log.info("spring.redis.database: {}", factory.getDatabase());
-        log.info("spring.redis.host: {}", factory.getHostName());
-        log.info("spring.redis.port: {}", factory.getPort());
-        log.info("spring.redis.timeout: {}", factory.getTimeout());
-        log.info("spring.redis.password: {}", factory.getPassword());
-        JedisPoolConfig pool = factory.getPoolConfig();
-        log.info("spring.redis.use-pool: {}", factory.getUsePool());
-        log.info("spring.redis.min-idle: {}", pool.getMinIdle());
-        log.info("spring.redis.max-idle: {}", pool.getMaxIdle());
-        log.info("spring.redis.max-active: {}", pool.getMaxTotal());
-        log.info("spring.redis.max-wait: {}", pool.getMaxWaitMillis());
-        log.info("spring.redis.test-on-borrow: {}", pool.getTestOnBorrow());
-        log.info("spring.redis.test-on-create: {}", pool.getTestOnCreate());
-        log.info("spring.redis.test-while-idle: {}", pool.getTestWhileIdle());
-        log.info("spring.redis.time-between-eviction-runs-millis: {}", pool
-                .getTimeBetweenEvictionRunsMillis());
+        if (log.isInfoEnabled()) {
+            log.info("spring.redis.database: {}", factory.getDatabase());
+            log.info("spring.redis.host: {}", factory.getHostName());
+            log.info("spring.redis.port: {}", factory.getPort());
+            log.info("spring.redis.timeout: {}", factory.getTimeout());
+            log.info("spring.redis.password: {}", factory.getPassword());
+            JedisPoolConfig pool = factory.getPoolConfig();
+            log.info("spring.redis.use-pool: {}", factory.getUsePool());
+            log.info("spring.redis.min-idle: {}", pool.getMinIdle());
+            log.info("spring.redis.max-idle: {}", pool.getMaxIdle());
+            log.info("spring.redis.max-active: {}", pool.getMaxTotal());
+            log.info("spring.redis.max-wait: {}", pool.getMaxWaitMillis());
+            log.info("spring.redis.test-on-borrow: {}", pool.getTestOnBorrow());
+            log.info("spring.redis.test-on-create: {}", pool.getTestOnCreate());
+            log.info("spring.redis.test-while-idle: {}", pool.getTestWhileIdle());
+            log.info("spring.redis.time-between-eviction-runs-millis: {}", pool
+                    .getTimeBetweenEvictionRunsMillis());
+        }
 
         template.setConnectionFactory(redisConnectionFactory);
         template.afterPropertiesSet();
@@ -121,6 +123,9 @@ public class TRedisAutoConfiguration extends CachingConfigurerSupport {
 
     /**
      * 配置 RedisCacheManager，使用 cache 注解管理 redis 缓存
+     * <pre>
+     *     这里一定要加上&#64;{@link Bean}注解
+     * </pre>
      */
     @Bean
     @Override

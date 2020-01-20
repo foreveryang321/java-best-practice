@@ -18,9 +18,9 @@ import java.lang.annotation.Target;
 @Documented
 public @interface Expired {
     /**
-     * expire time, default 60s.
+     * 过期时间，默认：-1，使用全局默认过期时间
      */
-    long value() default 60;
+    long value() default -1;
 
     /**
      * Spring Expression Language (SpEL) expression for computing the expire time dynamically.

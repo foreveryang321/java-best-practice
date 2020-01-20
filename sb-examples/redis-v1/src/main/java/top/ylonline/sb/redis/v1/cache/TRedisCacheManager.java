@@ -21,8 +21,6 @@ import top.ylonline.common.cache.util.CacheUtils;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * redis 缓存管理器
@@ -57,12 +55,12 @@ public class TRedisCacheManager extends RedisCacheManager implements Application
 
     @Override
     protected RedisCache getMissingCache(String name) {
-        long expiration = this.computeTtl(name);
+        long ttl = CacheUtils.computeTtl(name, this.computeExpiration(name));
         boolean usePrefix = this.isUsePrefix();
         RedisCachePrefix cachePrefix = this.getCachePrefix();
         RedisOperations redisOperations = this.getRedisOperations();
         return new RedisCache(name, usePrefix ? cachePrefix.prefix(name) : null, redisOperations,
-                expiration, false);
+                ttl, false);
     }
 
     @Override
@@ -81,6 +79,7 @@ public class TRedisCacheManager extends RedisCacheManager implements Application
         if (!expires.isEmpty()) {
             super.setExpires(expires);
         }
+        super.afterPropertiesSet();
     }
 
     private void doWith(final Class<?> clazz) {
@@ -102,24 +101,12 @@ public class TRedisCacheManager extends RedisCacheManager implements Application
                 continue;
             }
             long expire = expired.value();
-            if (log.isDebugEnabled()) {
-                log.debug("cacheNames: {}, expire: {}s", cacheNames, expire);
-            }
             if (expire >= 0) {
+                if (log.isInfoEnabled()) {
+                    log.info("cacheName: {}, expire#value: {}s", cacheName, expire);
+                }
                 expires.put(cacheName, expire);
-            } else {
-                log.warn("{} use default expiration.", cacheName);
             }
         }
-    }
-
-    Pattern pattern = Pattern.compile("\\.exp_(\\d+)");
-
-    private long computeTtl(String cacheName) {
-        Matcher matcher = pattern.matcher(cacheName);
-        if (matcher.find()) {
-            return Long.parseLong(matcher.group(1));
-        }
-        return this.computeExpiration(cacheName);
     }
 }

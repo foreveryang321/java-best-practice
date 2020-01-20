@@ -29,8 +29,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * 自定义 RedisCacheManager 缓存管理器
@@ -87,7 +85,9 @@ public class TRedisCacheManager extends RedisCacheManager implements Application
 
     @Override
     protected RedisCache getMissingCache(String name) {
-        RedisCacheConfiguration config = getRedisCacheConfiguration(name, computeTtl(name));
+        long ttl = CacheUtils.computeTtl(name, defaultCacheConfig.getTtl().getSeconds());
+
+        RedisCacheConfiguration config = getRedisCacheConfiguration(name, Duration.ofSeconds(ttl));
         return super.createRedisCache(name, config);
     }
 
@@ -119,30 +119,30 @@ public class TRedisCacheManager extends RedisCacheManager implements Application
         ReflectionUtils.doWithMethods(clazz, method -> {
             ReflectionUtils.makeAccessible(method);
             Expired expired = AnnotationUtils.findAnnotation(method, Expired.class);
-            Cacheable cacheable = AnnotationUtils.findAnnotation(method, Cacheable.class);
-            Caching caching = AnnotationUtils.findAnnotation(method, Caching.class);
-            CacheConfig cacheConfig = AnnotationUtils.findAnnotation(clazz, CacheConfig.class);
-
-            List<String> cacheNames = CacheUtils.getCacheNames(cacheable, caching, cacheConfig);
-            add(cacheNames, expired);
+            if (expired == null) {
+                return;
+            }
+            long expire = expired.value();
+            if (expire >= 0) {
+                Cacheable cacheable = AnnotationUtils.findAnnotation(method, Cacheable.class);
+                Caching caching = AnnotationUtils.findAnnotation(method, Caching.class);
+                CacheConfig cacheConfig = AnnotationUtils.findAnnotation(clazz, CacheConfig.class);
+                List<String> cacheNames = CacheUtils.getCacheNames(cacheable, caching, cacheConfig);
+                add(cacheNames, expire);
+            }
         }, method -> null != AnnotationUtils.findAnnotation(method, Expired.class));
     }
 
-    private void add(List<String> cacheNames, Expired expired) {
+    private void add(List<String> cacheNames, long expire) {
         for (String cacheName : cacheNames) {
             if (cacheName == null || "".equals(cacheName.trim())) {
                 continue;
             }
-            long expire = expired.value();
-            if (log.isDebugEnabled()) {
-                log.debug("cacheNames: {}, expire: {}s", cacheNames, expire);
+            if (log.isInfoEnabled()) {
+                log.info("cacheName: {}, expire#value: {}s", cacheName, expire);
             }
-            if (expire >= 0) {
-                RedisCacheConfiguration config = getRedisCacheConfiguration(cacheName, Duration.ofSeconds(expire));
-                initialCacheConfiguration.put(cacheName, config);
-            } else {
-                log.warn("{} use default expiration.", cacheName);
-            }
+            RedisCacheConfiguration config = getRedisCacheConfiguration(cacheName, Duration.ofSeconds(expire));
+            initialCacheConfiguration.put(cacheName, config);
         }
     }
 
@@ -161,15 +161,5 @@ public class TRedisCacheManager extends RedisCacheManager implements Application
             config = config.disableCachingNullValues();
         }
         return config;
-    }
-
-    Pattern pattern = Pattern.compile("\\.exp_(\\d+)");
-
-    private Duration computeTtl(String cacheName) {
-        Matcher matcher = pattern.matcher(cacheName);
-        if (matcher.find()) {
-            return Duration.ofSeconds(Long.parseLong(matcher.group(1)));
-        }
-        return defaultCacheConfig.getTtl();
     }
 }

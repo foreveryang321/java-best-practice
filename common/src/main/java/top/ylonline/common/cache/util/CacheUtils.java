@@ -7,6 +7,8 @@ import org.springframework.cache.annotation.Caching;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 缓存工具
@@ -56,5 +58,32 @@ public abstract class CacheUtils {
             }
         }
         return list;
+    }
+
+    private static final String SYMBOL = "#";
+    private static final Pattern PATTERN_TTL = Pattern.compile(SYMBOL + "(\\d+)");
+
+    /**
+     * 构建一个新的 cacheName，已实现动态过期时间配置
+     *
+     * @param cacheName 原始 cacheName
+     * @param ttl       过期时间
+     */
+    public static String buildCacheNameForTtl(String cacheName, long ttl) {
+        return cacheName + SYMBOL + ttl;
+    }
+
+    /**
+     * 计算过期时间
+     *
+     * @param cacheName  缓存名称
+     * @param defaultTtl 默认过期时间，单位：s（秒）
+     */
+    public static long computeTtl(String cacheName, long defaultTtl) {
+        Matcher matcher = PATTERN_TTL.matcher(cacheName);
+        if (matcher.find()) {
+            return Long.parseLong(matcher.group(1));
+        }
+        return defaultTtl;
     }
 }

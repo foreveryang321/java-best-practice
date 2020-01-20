@@ -14,6 +14,7 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.util.ObjectUtils;
 import top.ylonline.common.cache.annotation.Expired;
+import top.ylonline.common.cache.util.CacheUtils;
 import top.ylonline.common.util.StrUtils;
 
 import java.lang.reflect.Method;
@@ -85,7 +86,7 @@ public class TCacheResolver extends AbstractCacheResolver {
         }
         Set<String> names = new HashSet<>();
         for (String cacheName : cacheNames) {
-            names.add(cacheName + ".exp_" + ttl);
+            names.add(CacheUtils.buildCacheNameForTtl(cacheName, ttl));
         }
         return names;
     }
