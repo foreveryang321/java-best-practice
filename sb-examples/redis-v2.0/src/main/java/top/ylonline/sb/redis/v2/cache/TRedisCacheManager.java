@@ -119,7 +119,7 @@ public class TRedisCacheManager extends RedisCacheManager implements Application
         ReflectionUtils.doWithMethods(clazz, method -> {
             ReflectionUtils.makeAccessible(method);
             Expired expired = AnnotationUtils.findAnnotation(method, Expired.class);
-            if (expired == null) {
+            if (expired == null || StrUtils.isNotBlank(expired.el())) {
                 return;
             }
             long expire = expired.value();

@@ -48,7 +48,7 @@ public class TCacheResolver extends AbstractCacheResolver {
         Object[] args = context.getArgs();
         Set<String> cacheNames = context.getOperation().getCacheNames();
         Expired expired = AnnotationUtils.findAnnotation(method, Expired.class);
-        if (expired == null || StrUtils.isBlank(expired.spEl())) {
+        if (expired == null || StrUtils.isBlank(expired.el())) {
             return cacheNames;
         }
         // Shortcut if no args need to be loaded
@@ -79,7 +79,7 @@ public class TCacheResolver extends AbstractCacheResolver {
                 eval.setVariable(paramNames[i], value);
             }
         }
-        Expression expression = parser.parseExpression(expired.spEl());
+        Expression expression = parser.parseExpression(expired.el());
         Long ttl = expression.getValue(eval, Long.class);
         if (ttl == null || ttl <= 0) {
             return cacheNames;

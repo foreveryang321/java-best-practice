@@ -17,6 +17,7 @@ import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.util.ReflectionUtils;
 import top.ylonline.common.cache.annotation.Expired;
 import top.ylonline.common.cache.util.CacheUtils;
+import top.ylonline.common.util.StrUtils;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -85,28 +86,29 @@ public class TRedisCacheManager extends RedisCacheManager implements Application
     private void doWith(final Class<?> clazz) {
         ReflectionUtils.doWithMethods(clazz, method -> {
             Expired expired = AnnotationUtils.findAnnotation(method, Expired.class);
-            // cacheNames 配置优先级：Cacheable > Caching > CacheConfig
-            Cacheable cacheable = AnnotationUtils.findAnnotation(method, Cacheable.class);
-            Caching caching = AnnotationUtils.findAnnotation(method, Caching.class);
-            CacheConfig cacheConfig = AnnotationUtils.findAnnotation(clazz, CacheConfig.class);
-
-            List<String> cacheNames = CacheUtils.getCacheNames(cacheable, caching, cacheConfig);
-            add(cacheNames, expired);
+            if (expired == null || StrUtils.isNotBlank(expired.el())) {
+                return;
+            }
+            long expire = expired.value();
+            if (expire >= 0) {
+                Cacheable cacheable = AnnotationUtils.findAnnotation(method, Cacheable.class);
+                Caching caching = AnnotationUtils.findAnnotation(method, Caching.class);
+                CacheConfig cacheConfig = AnnotationUtils.findAnnotation(clazz, CacheConfig.class);
+                List<String> cacheNames = CacheUtils.getCacheNames(cacheable, caching, cacheConfig);
+                add(cacheNames, expire);
+            }
         }, method -> AnnotationUtils.findAnnotation(method, Expired.class) != null);
     }
 
-    private void add(List<String> cacheNames, Expired expired) {
+    private void add(List<String> cacheNames, long expire) {
         for (String cacheName : cacheNames) {
             if (cacheName == null || "".equals(cacheName.trim())) {
                 continue;
             }
-            long expire = expired.value();
-            if (expire >= 0) {
-                if (log.isInfoEnabled()) {
-                    log.info("cacheName: {}, expire#value: {}s", cacheName, expire);
-                }
-                expires.put(cacheName, expire);
+            if (log.isInfoEnabled()) {
+                log.info("cacheName: {}, expire#value: {}s", cacheName, expire);
             }
+            expires.put(cacheName, expire);
         }
     }
 }

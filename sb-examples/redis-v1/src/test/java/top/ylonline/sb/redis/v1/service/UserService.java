@@ -28,7 +28,7 @@ public class UserService {
     @Cacheable(
             value = "redis.v1.test.ttl",
             unless = "#result == null")
-    @Expired(spEl = "#ttl")
+    @Expired(el = "#ttl")
     public User getUser(Long id, String firstName, String lastName, long ttl) {
         return new User(id, firstName, lastName);
     }
