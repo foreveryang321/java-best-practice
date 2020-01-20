@@ -80,6 +80,9 @@ public class TCacheResolver extends AbstractCacheResolver {
             }
         }
         Expression expression = parser.parseExpression(expired.el());
+        /**
+         * 这里可能会抛出异常，不用处理，这样有利于程序发现{@link Expired#el}配置错误问题
+         */
         Long ttl = expression.getValue(eval, Long.class);
         if (ttl == null || ttl <= 0) {
             return cacheNames;
