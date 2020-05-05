@@ -5,6 +5,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import top.ylonline.common.util.StrUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,10 +39,19 @@ public class Dom4jUtils {
     }
 
     /**
-     * org.dom4j.Document 转  com.alibaba.fastjson.JSONObject
+     * org.dom4j.Document 转 Map
+     *
+     * @param xml xml 报文
+     */
+    public static Map<String, Object> parse(String xml) {
+        return parse(xml, new XMLParserConfiguration());
+    }
+
+    /**
+     * org.dom4j.Document 转 Map
      *
      * @param xml    xml 报文
-     * @param config 需不需要解析 attribute
+     * @param config 自定义配置
      */
     public static Map<String, Object> parse(String xml, XMLParserConfiguration config) {
         Document document = strToDocument(xml);
@@ -49,7 +59,7 @@ public class Dom4jUtils {
     }
 
     private static Map<String, Object> parse(Document document, XMLParserConfiguration config) {
-        Map<String, Object> map = new HashMap<>(1);
+        Map<String, Object> map = new HashMap<>(3);
         if (document == null) {
             return map;
         }
@@ -58,17 +68,31 @@ public class Dom4jUtils {
         while (it.hasNext()) {
             Element element = it.next();
             String name = element.getName();
-            // System.out.println("-1: " + name + " ---> " + element.getTextTrim());
             if (!element.elements().isEmpty()) {
                 Map<String, Object> data = parse(element, config);
                 hasChildElementToMap(config, element, data);
-                map.put(name, data);
+                // 如果存在多个
+                Object obj = map.get(name);
+                if (obj != null) {
+                    List<Object> list;
+                    if ("java.util.ArrayList".equals(obj.getClass().getName())) {
+                        list = (List<Object>) obj;
+                        list.add(data);
+                    } else {
+                        list = new ArrayList<>();
+                        list.add(obj);
+                        list.add(data);
+                    }
+                    map.put(name, list);
+                } else {
+                    map.put(name, data);
+                }
             } else {
-                map.put(name, element.getTextTrim());
+                textOnlyElementToMap(config, element, map);
             }
         }
         if (config.isKeepRoot()) {
-            Map<String, Object> tmp = new HashMap<>(1);
+            Map<String, Object> tmp = new HashMap<>(3);
             tmp.put(root.getName(), map);
             return tmp;
         }
@@ -80,63 +104,45 @@ public class Dom4jUtils {
         Map<String, Object> map = new HashMap<>(4);
 
         if (e.elements().isEmpty()) {
-            map.put(e.getName(), e.getTextTrim());
+            textOnlyElementToMap(config, e, map);
             return map;
         }
 
         List<Element> elements = e.elements();
         for (Element element : elements) {
             String name = element.getName();
-            // String textTrim = element.getTextTrim();
-
-            // System.out.println("0: " + name + " ---> " + textTrim);
-
-            List list;
-
+            List<Object> list;
             if (element.elements().size() > 0) {
-                // System.out.println("1: " + name + " ---> " + textTrim);
                 Map<String, Object> data = parse(element, config);
                 if (map.get(name) != null) {
                     Object obj = map.get(name);
                     if ("java.util.ArrayList".equals(obj.getClass().getName())) {
-                        list = (List) obj;
+                        list = (List<Object>) obj;
                         list.add(data);
-                        // System.out.println("2: " + name + " ---> " + data);
                     } else {
-                        list = new ArrayList();
+                        list = new ArrayList<>();
                         list.add(obj);
-                        // list.add(data);
-
                         hasChildElementToMap(config, element, data);
                         list.add(data);
-                        // System.out.println("3: " + name + " ---> " + data);
                     }
                     map.put(name, list);
                 } else {
-                    // System.out.println("4: " + name + " ---> " + data);
-                    // map.put(name, data);
-
                     hasChildElementToMap(config, element, data);
                     map.put(name, data);
                 }
             } else {
                 if (map.get(name) != null) {
-                    // System.out.println("5: " + name + " ---> " + textTrim);
                     Object obj = map.get(name);
                     if ("java.util.ArrayList".equals(obj.getClass().getName())) {
-                        list = (List) obj;
-                        // list.add(textTrim);
+                        list = (List<Object>) obj;
                         textOnlyElementToList(config, element, list);
                     } else {
-                        list = new ArrayList();
+                        list = new ArrayList<>();
                         list.add(obj);
-                        // list.add(textTrim);
                         textOnlyElementToList(config, element, list);
                     }
                     map.put(name, list);
                 } else {
-                    // System.out.println("6: " + name + " ---> " + textTrim);
-                    // map.put(name, textTrim);
                     textOnlyElementToMap(config, element, map);
                 }
             }
@@ -152,14 +158,16 @@ public class Dom4jUtils {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    private static void textOnlyElementToList(XMLParserConfiguration config, Element element, List list) {
+    private static void textOnlyElementToList(XMLParserConfiguration config, Element element, List<Object> list) {
         if (config.isKeepAttributes() && !element.attributes().isEmpty()) {
             Map<String, Object> tmp = attributeToMap(element, true);
             list.add(tmp);
         } else {
             String textTrim = element.getTextTrim();
-            list.add(textTrim);
+            // 判断是否为空，防止某些 Map、List 节点（比如：<CumulativeItemList />）错误返回成 String 类型
+            if (StrUtils.isNotBlank(textTrim)) {
+                list.add(textTrim);
+            }
         }
     }
 
@@ -171,7 +179,10 @@ public class Dom4jUtils {
             map.put(name, tmp);
         } else {
             String textTrim = element.getTextTrim();
-            map.put(name, textTrim);
+            // 判断是否为空，防止某些 Map、List 节点（比如：<CumulativeItemList />）错误返回成 String 类型
+            if (StrUtils.isNotBlank(textTrim)) {
+                map.put(name, textTrim);
+            }
         }
     }
 
@@ -182,8 +193,9 @@ public class Dom4jUtils {
         }
         List<Attribute> attributes = element.attributes();
         for (Attribute attribute : attributes) {
-            String attributeName = attribute.getName();
-            tmp.put("@" + attributeName, attribute.getValue());
+            String name = attribute.getName();
+            String value = attribute.getStringValue();
+            tmp.put("@" + name, value);
         }
         return tmp;
     }
