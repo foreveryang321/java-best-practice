@@ -7,6 +7,7 @@ Java 的一些学习例子，最佳实践
 > dubbo
 - [dubbo-v2.6.x](dubbo-examples/dubbo-v2.6.x) Dubbo-2.6.5 + Spring Boot：zk + nacos 注册中心
 - [dubbo-v2.7.x](dubbo-examples/dubbo-v2.7.x) Dubbo-2.7.0 + Spring Boot
+- [dubbo-sca](dubbo-examples/dubbo-sca) Dubbo-2.7.6 + Spring Boot.2.0.x + Spring Cloud.F
 
 
 > nacos

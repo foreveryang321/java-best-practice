@@ -24,20 +24,20 @@
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
+            <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-dubbo</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.dubbo</groupId>
-                    <artifactId>dubbo-spring-boot-actuator</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <!-- Spring Cloud Zookeeper Service Discovery -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-zookeeper-discovery</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- dubbo: rest -->
@@ -49,10 +49,10 @@
             <!--<groupId>org.jboss.resteasy</groupId>-->
             <!--<artifactId>resteasy-jaxrs</artifactId>-->
         <!--</dependency>-->
-        <dependency>
+        <!--<dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-netty4</artifactId>
-        </dependency>
+        </dependency>-->
         <!--<dependency>-->
             <!--<groupId>org.jboss.resteasy</groupId>-->
             <!--<artifactId>resteasy-jackson-provider</artifactId>-->
@@ -61,14 +61,14 @@
             <!--<groupId>org.jboss.resteasy</groupId>-->
             <!--<artifactId>resteasy-jaxb-provider</artifactId>-->
         <!--</dependency>-->
-        <dependency>
+        <!--<dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-        </dependency>
+        </dependency>-->
     </dependencies>
 
     <build>

@@ -3,7 +3,7 @@ package top.ylonline.dubbo.sca.api;
 /**
  * @author YL
  */
-public interface DubboService {
+public interface EchoService {
     /**
      * echo
      *
@@ -11,5 +11,5 @@ public interface DubboService {
      *
      * @return 信息
      */
-    String get(String message);
+    String echo(String message);
 }

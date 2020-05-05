@@ -1,32 +1,22 @@
-server:
-  port: 0
+#server:
+#  port: 0
 dubbo:
-#  scan:
-#    base-packages:
-#      - top.ylonline.dubbo.sca
-#      - top.ylonline.dubbo.sca.service
   application:
+    id: dubbo-sca-consumer
     name: dubbo-sca-consumer
-    qos:
-      enable: false
-      port: 33333
-      accept:
-        foreign:
-          ip: false
+    qos-enable: false
   registry:
     address: spring-cloud://localhost
-#  protocol:
-#    name: dubbo
-#    port: -1
-#  protocols:
-#    dubbo:
-#      name: dubbo
-#      port: -1
-#    rest:
-#      name: rest
-#      port: 8081
-#      server: netty
-
+  consumer:
+    check: false
   cloud:
-    # The subscribed services in consumer side
     subscribed-services: dubbo-sca-provider
+#provider:
+#  application:
+#    name: dubbo-sca-provider
+spring:
+  cloud:
+    service-registry:
+      auto-registration:
+        # 要禁用这个，否则需要web环境才能启动
+        enabled: false

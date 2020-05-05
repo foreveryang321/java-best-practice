@@ -10,7 +10,7 @@ import top.ylonline.dubbo.sca.api.DubboService;
 public class DubboServiceImpl implements DubboService {
 
     @Override
-    public String echo(String message) {
+    public String get(String message) {
         return "Hello " + message;
     }
 }

@@ -1,13 +1,17 @@
 package top.ylonline.dubbo.sca;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.Reference;
 import org.apache.dubbo.config.spring.context.annotation.DubboComponentScan;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.util.StopWatch;
 import top.ylonline.dubbo.sca.api.DubboService;
+import top.ylonline.dubbo.sca.api.EchoService;
 
 /**
  * @author YL
@@ -15,16 +19,20 @@ import top.ylonline.dubbo.sca.api.DubboService;
 @SpringBootApplication
 @DubboComponentScan(basePackages = "top.ylonline.dubbo.sca")
 @EnableDiscoveryClient
+@Slf4j
 public class DubboScaConsumerApp {
 
     public static void main(String[] args) {
         new SpringApplicationBuilder(DubboScaConsumerApp.class)
                 .properties("spring.profiles.active=zk")
+                .web(WebApplicationType.NONE)
                 .run(args);
     }
 
     @Reference
     private DubboService dubboService;
+    @Reference
+    private EchoService echoService;
     // @Reference
     // private RestService restService;
 
@@ -100,8 +108,15 @@ public class DubboScaConsumerApp {
     @Bean
     public ApplicationRunner userServiceRunner() {
         return arguments -> {
-            System.out.printf("DubboService.echo(%s)", dubboService.echo("test"));
+            StopWatch watch = new StopWatch();
+            watch.start();
+            log.info("EcboService.echo({})", echoService.echo("test"));
+            watch.stop();
+            watch.start();
+            log.info("DubboService.get({})", dubboService.get("test"));
             // System.out.printf("RestService.getName(%s)", restService.getName(1L));
+            watch.stop();
+            log.info(watch.prettyPrint());
         };
     }
 }
