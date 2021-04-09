@@ -31,7 +31,7 @@ public class CrmTest extends TestCase {
     }
 
     private void parse(String fileName) {
-        XMLParserConfiguration configuration = new XMLParserConfiguration(KEEP_ATTRRIBUTES, null);
+        XMLParserConfiguration configuration = new XMLParserConfiguration(false, KEEP_ATTRRIBUTES);
         String xml = getByFile(fileName, ENCODING);
 
         // 去掉<?xml version="1.0" encoding="UTF-8"?>

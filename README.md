@@ -26,7 +26,7 @@ Java 的一些学习例子，最佳实践
 
 
 > feign-examples
-- 无
+- [openfeign](feign-examples/openfeign) openfeign 简单使用
 
 
 > dom4j
@@ -44,10 +44,10 @@ Java 的一些学习例子，最佳实践
 
 > Cache
 
-自定义 Expired 注解，实现 redis 
- 缓存的过期时间配置，并支持 SpEL 表达式配置动态过期时间
+自定义 Expired 注解，实现缓存的过期时间配置，并支持 SpEL 表达式配置动态过期时间
 - redis
     - [redis-v1](sb-examples/redis-v1)
     - [redis-v2.0](sb-examples/redis-v2.0) 
 
-- memcached(待完善)
+- memcached
+    - [xmemcached-spring-boot-starter](https://github.com/foreveryang321/xmemcached-spring-boot-starter) Spring Boot Starter for XMemcached

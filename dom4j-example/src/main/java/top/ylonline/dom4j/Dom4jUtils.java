@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * @author YL
  */
-public class Dom4jUtils {
+public abstract class Dom4jUtils {
     /**
      * String 转 org.dom4j.Document
      */
