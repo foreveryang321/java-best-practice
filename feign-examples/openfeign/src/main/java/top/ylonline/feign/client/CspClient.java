@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @author YL
  */
 @FeignClient(
-        name = "csp-interface-platform",
-        url = "http://172.20.1.168:8882/smtccs_agent_intf/services/wsagent"
+        name = "ic",
+        url = "http://127.0.0.1:8888/ic/services/ws"
 )
 public interface CspClient {
 
     /**
-     * 调用csp平台接口
+     * 调用 ic 平台接口
      *
      * @param xml 入参
      *
