@@ -27,7 +27,7 @@
         <spring-boot.version>2.0.9.RELEASE</spring-boot.version>
         <spring-cloud.version>Finchley.SR2</spring-cloud.version>
 
-        <dubbo.version>2.7.6</dubbo.version>
+        <dubbo.version>2.7.13</dubbo.version>
         <dubbo-spring-boot-stater.version>2.7.6</dubbo-spring-boot-stater.version>
     </properties>
 
