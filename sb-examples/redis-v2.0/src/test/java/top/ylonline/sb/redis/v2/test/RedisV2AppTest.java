@@ -21,6 +21,13 @@ public class RedisV2AppTest {
     private UserService userService;
 
     @Test
+    public void none() {
+        User user = userService.none(1L, "cache", "normal");
+        System.out.println(user.toString());
+        Assert.assertEquals(1, user.getId().longValue());
+    }
+
+    @Test
     public void normal() {
         User user = userService.getUser(1L, "cache", "normal");
         System.out.println(user.toString());

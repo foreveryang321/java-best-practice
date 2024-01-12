@@ -1,15 +1,24 @@
-package top.ylonline.sb.redis.v1.service;
+package top.ylonline.sb.redis.v1.test.service;
 
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import top.ylonline.common.cache.annotation.Expired;
-import top.ylonline.sb.redis.v1.domain.User;
+import top.ylonline.sb.redis.v1.test.domain.User;
 
 /**
  * @author YL
  */
 @Service
 public class UserService {
+    /**
+     * 使用默认
+     */
+    @Cacheable(
+            value = "redis.v1.none",
+            unless = "#result == null")
+    public User none(Long id, String firstName, String lastName) {
+        return new User(id, firstName, lastName);
+    }
 
     /**
      * 指定具体过期时间

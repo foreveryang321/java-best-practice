@@ -1,13 +1,12 @@
-package top.ylonline.sb.redis.v1;
+package top.ylonline.sb.redis.v1.test;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import top.ylonline.sb.redis.v1.domain.User;
-import top.ylonline.sb.redis.v1.service.UserService;
+import top.ylonline.sb.redis.v1.test.domain.User;
+import top.ylonline.sb.redis.v1.test.service.UserService;
 
 import javax.annotation.Resource;
 
@@ -19,6 +18,13 @@ import javax.annotation.Resource;
 public class RedisV1AppTest {
     @Resource
     private UserService userService;
+
+    @Test
+    public void none() {
+        User user = userService.none(1L, "cache", "normal");
+        System.out.println(user.toString());
+        Assert.assertEquals(1, user.getId().longValue());
+    }
 
     @Test
     public void normal() {

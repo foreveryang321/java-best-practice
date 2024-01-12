@@ -10,6 +10,15 @@ import top.ylonline.sb.redis.v2.test.domain.User;
  */
 @Service
 public class UserService {
+    /**
+     * 使用默认
+     */
+    @Cacheable(
+            value = "redis.v2.none",
+            unless = "#result == null")
+    public User none(Long id, String firstName, String lastName) {
+        return new User(id, firstName, lastName);
+    }
 
     /**
      * 指定具体过期时间
