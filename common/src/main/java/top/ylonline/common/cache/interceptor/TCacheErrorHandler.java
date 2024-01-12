@@ -30,19 +30,23 @@ public class TCacheErrorHandler implements CacheErrorHandler {
 
     @Override
     public void handleCacheGetError(RuntimeException exception, Cache cache, Object key) {
-        log.error("key: {}, errmsg: {}", key, exception.getMessage(), exception);
+        log.error("key: {}, msg: {}", key, exception.getMessage(), exception);
     }
 
     @Override
     public void handleCachePutError(RuntimeException exception, Cache cache, Object key, Object value) {
-        log.error("key: {}, value: {}, errmsg: {}", key, value, exception.getMessage(), exception);
-        // 写入失败时，尝试删除缓存
-        cache.evict(key);
+        log.error("key: {}, value: {}, msg: {}", key, value, exception.getMessage(), exception);
+        // 写入失败时，尝试删除缓存，如果 evict 也出现异常，则可能会直接抛给应用，这里需要 try catch 处理一下
+        try {
+            cache.evict(key);
+        } catch (Exception e) {
+            // ignore
+        }
     }
 
     @Override
     public void handleCacheEvictError(RuntimeException exception, Cache cache, Object key) {
-        log.error("key: {}, errmsg: {}", key, exception.getMessage(), exception);
+        log.error("key: {}, msg: {}", key, exception.getMessage(), exception);
     }
 
     @Override

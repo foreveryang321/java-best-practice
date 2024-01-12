@@ -29,6 +29,8 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * 自定义 RedisCacheManager 缓存管理器
@@ -40,126 +42,41 @@ import java.util.Map;
  * @author YL
  */
 @Slf4j
-public class TRedisCacheManager extends RedisCacheManager implements ApplicationContextAware, InitializingBean {
-    private ApplicationContext applicationContext;
-
-    private Map<String, RedisCacheConfiguration> initialCacheConfiguration = new LinkedHashMap<>();
-
-    /**
-     * key serializer
-     */
-    public static final StringRedisSerializer STRING_SERIALIZER = new StringRedisSerializer();
-
-    /**
-     * value serializer
-     * <pre>
-     *     使用 FastJsonRedisSerializer 会报错：java.lang.ClassCastException
-     *     FastJsonRedisSerializer<Object> fastSerializer = new FastJsonRedisSerializer<>(Object.class);
-     * </pre>
-     */
-    public static final GenericFastJsonRedisSerializer FASTJSON_SERIALIZER = new GenericFastJsonRedisSerializer();
-
-    /**
-     * key serializer pair
-     */
-    public static final RedisSerializationContext.SerializationPair<String> STRING_PAIR = RedisSerializationContext
-            .SerializationPair.fromSerializer(STRING_SERIALIZER);
-    /**
-     * value serializer pair
-     */
-    public static final RedisSerializationContext.SerializationPair<Object> FASTJSON_PAIR = RedisSerializationContext
-            .SerializationPair.fromSerializer(FASTJSON_SERIALIZER);
-
+public class TRedisCacheManager extends RedisCacheManager {
     @Getter
-    private RedisCacheConfiguration defaultCacheConfig;
+    private final RedisCacheConfiguration defaultCacheConfig;
 
-    public TRedisCacheManager(RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfig) {
-        super(cacheWriter, defaultCacheConfig);
+    public TRedisCacheManager(RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfig,
+                              boolean allowInFlightCacheCreation, String... initialCacheNames) {
+        super(cacheWriter, defaultCacheConfig, allowInFlightCacheCreation, initialCacheNames);
         this.defaultCacheConfig = defaultCacheConfig;
     }
 
+    private final ConcurrentMap<String, Cache> cacheMap = new ConcurrentHashMap<>(16);
+
     @Override
     public Cache getCache(String name) {
-        return super.getCache(name);
-    }
-
-    @Override
-    protected RedisCache getMissingCache(String name) {
-        long ttl = CacheUtils.computeTtl(name, defaultCacheConfig.getTtl().getSeconds());
-
-        RedisCacheConfiguration config = getRedisCacheConfiguration(name, Duration.ofSeconds(ttl));
-        return super.createRedisCache(name, config);
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
-    }
-
-    @Override
-    public void afterPropertiesSet() {
-        String[] beanNames = applicationContext.getBeanNamesForType(Object.class);
-        for (String beanName : beanNames) {
-            final Class<?> clazz = applicationContext.getType(beanName);
-            doWith(clazz);
+        if (log.isDebugEnabled()) {
+            log.debug("getCache ---> name: {}", name);
         }
-        super.afterPropertiesSet();
-    }
-
-    @Override
-    protected Collection<RedisCache> loadCaches() {
-        List<RedisCache> caches = new LinkedList<>();
-        for (Map.Entry<String, RedisCacheConfiguration> entry : initialCacheConfiguration.entrySet()) {
-            caches.add(super.createRedisCache(entry.getKey(), entry.getValue()));
+        // Quick check for existing cache...
+        Cache cache = this.cacheMap.get(name);
+        if (cache != null) {
+            return cache;
         }
-        return caches;
-    }
-
-    private void doWith(final Class<?> clazz) {
-        ReflectionUtils.doWithMethods(clazz, method -> {
-            ReflectionUtils.makeAccessible(method);
-            Expired expired = AnnotationUtils.findAnnotation(method, Expired.class);
-            if (expired == null || StrUtils.isNotBlank(expired.el())) {
-                return;
+        String[] array = CacheUtils.splitCacheNameForTtl(name);
+        String cacheName = array[0];
+        cache = super.getCache(cacheName);
+        if (cache != null && array.length > 1) {
+            long ttl = Long.parseLong(array[1]);
+            if (log.isDebugEnabled()) {
+                log.debug("getCache ---> cacheName: {}, ttl: {}", cacheName, ttl);
             }
-            long expire = expired.value();
-            if (expire >= 0) {
-                Cacheable cacheable = AnnotationUtils.findAnnotation(method, Cacheable.class);
-                Caching caching = AnnotationUtils.findAnnotation(method, Caching.class);
-                CacheConfig cacheConfig = AnnotationUtils.findAnnotation(clazz, CacheConfig.class);
-                List<String> cacheNames = CacheUtils.getCacheNames(cacheable, caching, cacheConfig);
-                add(cacheNames, expire);
-            }
-        }, method -> null != AnnotationUtils.findAnnotation(method, Expired.class));
-    }
-
-    private void add(List<String> cacheNames, long expire) {
-        for (String cacheName : cacheNames) {
-            if (cacheName == null || "".equals(cacheName.trim())) {
-                continue;
-            }
-            if (log.isInfoEnabled()) {
-                log.info("cacheName: {}, expire#value: {}s", cacheName, expire);
-            }
-            RedisCacheConfiguration config = getRedisCacheConfiguration(cacheName, Duration.ofSeconds(expire));
-            initialCacheConfiguration.put(cacheName, config);
+            RedisCacheConfiguration cacheConfiguration = this.defaultCacheConfig
+                    .entryTtl(Duration.ofSeconds(ttl));
+            cache = super.createRedisCache(cacheName, cacheConfiguration);
+            cacheMap.put(name, cache);
         }
-    }
-
-    private RedisCacheConfiguration getRedisCacheConfiguration(String cacheName, Duration ttl) {
-        boolean allowCacheNullValues = defaultCacheConfig.getAllowCacheNullValues();
-        boolean useKeyPrefix = defaultCacheConfig.usePrefix();
-        String keyPrefix = defaultCacheConfig.getKeyPrefixFor(cacheName);
-        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(ttl)
-                .serializeKeysWith(TRedisCacheManager.STRING_PAIR)
-                .serializeValuesWith(TRedisCacheManager.FASTJSON_PAIR);
-        if (useKeyPrefix && StrUtils.isNotBlank(keyPrefix)) {
-            config = config.prefixKeysWith(keyPrefix);
-        }
-        if (!allowCacheNullValues) {
-            config = config.disableCachingNullValues();
-        }
-        return config;
+        return cache;
     }
 }

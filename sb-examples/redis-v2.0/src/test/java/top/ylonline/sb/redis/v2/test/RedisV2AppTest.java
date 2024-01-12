@@ -1,12 +1,12 @@
-package top.ylonline.sb.redis.v2;
+package top.ylonline.sb.redis.v2.test;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import top.ylonline.sb.redis.v2.domain.User;
-import top.ylonline.sb.redis.v2.service.UserService;
+import top.ylonline.sb.redis.v2.test.domain.User;
+import top.ylonline.sb.redis.v2.test.service.UserService;
 
 import javax.annotation.Resource;
 

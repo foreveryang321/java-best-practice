@@ -1,9 +1,9 @@
-package top.ylonline.sb.redis.v2.service;
+package top.ylonline.sb.redis.v2.test.service;
 
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import top.ylonline.common.cache.annotation.Expired;
-import top.ylonline.sb.redis.v2.domain.User;
+import top.ylonline.sb.redis.v2.test.domain.User;
 
 /**
  * @author YL

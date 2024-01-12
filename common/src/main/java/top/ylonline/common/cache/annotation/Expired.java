@@ -21,18 +21,18 @@ import java.lang.annotation.Target;
 @Documented
 public @interface Expired {
     /**
-     * 过期时间，默认：-1，使用全局默认过期时间
+     * 过期时间，单位：秒，默认：-1（使用全局默认过期时间）
      * <pre>
-     *     与 {@link #el()} 属性互斥. 优先使用 {@link #el()} 配置。
+     *     与 {@link #el()} 属性互斥，优先使用 {@link #el()} 配置。
      * </pre>
      */
     long value() default -1;
 
     /**
-     * Spring Expression Language (SpEL) expression for computing the expire time dynamically.
+     * 过期时间，单位：秒
+     * Spring Expression Language (SpEL) expression for computing the expiration time dynamically.
      * <pre>
-     *     与 {@link #value()} 属性互斥. 优先使用当前配置。
-     *     由于该实现是重新构建一个cacheName，这样会导致配合CachePut、CacheEvict等使用时会有问题。
+     *     与 {@link #value()} 属性互斥，优先使用当前配置。
      * </pre>
      */
     String el() default "";
