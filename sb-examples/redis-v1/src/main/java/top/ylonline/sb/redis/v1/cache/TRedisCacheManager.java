@@ -34,6 +34,13 @@ public class TRedisCacheManager extends RedisCacheManager {
 
     private final ConcurrentMap<String, Cache> cacheMap = new ConcurrentHashMap<>(16);
 
+    /**
+     * 该实现主要解决了 {@link top.ylonline.common.cache.interceptor.TCacheResolver} 中构建了新 cacheName，导致 CachePut、CacheEvict
+     * 等使用失效问题。
+     *
+     * @param name {@link top.ylonline.common.cache.interceptor.TCacheResolver} 中生成的新的 cacheName
+     * @return cache 实例
+     */
     @Override
     public Cache getCache(String name) {
         if (log.isDebugEnabled()) {

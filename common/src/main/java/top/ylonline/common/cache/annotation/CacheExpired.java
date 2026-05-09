@@ -1,16 +1,11 @@
 package top.ylonline.common.cache.annotation;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * 自定义缓存过期时间配置注解，过期时间单位：s（秒）
  * <pre>
- *     1、{@link Expired#el()}优先级比{@link Expired#value()}高，优先使用{@link Expired#el()}的配置
+ *     1、{@link CacheExpired#el()}优先级比{@link CacheExpired#value()}高，优先使用{@link CacheExpired#el()}的配置
  * </pre>
  *
  * @author YL
@@ -19,7 +14,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
-public @interface Expired {
+public @interface CacheExpired {
     /**
      * 过期时间，单位：秒，默认：-1（使用全局默认过期时间）
      * <pre>

@@ -14,7 +14,7 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
-import top.ylonline.common.cache.annotation.Expired;
+import top.ylonline.common.cache.annotation.CacheExpired;
 import top.ylonline.common.cache.util.CacheUtils;
 
 import java.lang.reflect.Method;
@@ -26,12 +26,18 @@ import java.util.Set;
 /**
  * 自定义 {@link org.springframework.cache.interceptor.CacheResolver} 以实现动态过期时间配置
  *
+ * <p>
+ * 由于该实现是重新构建了 cacheName，如果不在 CacheManager 中做处理将新的 cacheName 映射到旧 cacheName 的话，
+ * 会导致 CachePut、CacheEvict 等使用时失效，因为 CachePut、CacheEvict 使用的还是旧的 cacheName，缓存名称不一致。
+ * </p>
+ *
  * @author YL
  */
 @Slf4j
 public class TCacheResolver extends AbstractCacheResolver {
     private final ExpressionParser parser = new SpelExpressionParser();
-    private final LocalVariableTableParameterNameDiscoverer discoverer = new LocalVariableTableParameterNameDiscoverer();
+    private final LocalVariableTableParameterNameDiscoverer discoverer =
+            new LocalVariableTableParameterNameDiscoverer();
 
     public TCacheResolver(CacheManager cacheManager) {
         super(cacheManager);
@@ -46,11 +52,11 @@ public class TCacheResolver extends AbstractCacheResolver {
         if (ObjectUtils.isEmpty(args)) {
             return cacheNames;
         }
-        Expired expired = AnnotationUtils.findAnnotation(method, Expired.class);
-        if (expired == null) {
+        CacheExpired cacheExpired = AnnotationUtils.findAnnotation(method, CacheExpired.class);
+        if (cacheExpired == null) {
             return cacheNames;
         }
-        String expiredEl = expired.el();
+        String expiredEl = cacheExpired.el();
         if (StringUtils.hasText(expiredEl) && expiredEl.startsWith("#")) {
             // Expose indexed variables as well as parameter names (if discoverable)
             String[] paramNames = this.discoverer.getParameterNames(method);
@@ -78,7 +84,7 @@ public class TCacheResolver extends AbstractCacheResolver {
             }
             Expression expression = parser.parseExpression(expiredEl);
             /**
-             * 这里可能会抛出异常，不用处理，这样有利于程序发现{@link Expired#el}配置错误问题
+             * 这里可能会抛出异常，不用处理，这样有利于程序发现{@link CacheExpired#el}配置错误问题
              */
             Long ttl = expression.getValue(eval, Long.class);
             if (ttl == null || ttl <= 0) {
@@ -90,7 +96,7 @@ public class TCacheResolver extends AbstractCacheResolver {
             }
             return names;
         } else {
-            long expiredValue = expired.value();
+            long expiredValue = cacheExpired.value();
             if (expiredValue <= 0) {
                 return cacheNames;
             }

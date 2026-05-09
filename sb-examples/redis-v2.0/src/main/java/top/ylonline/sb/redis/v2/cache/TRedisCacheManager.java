@@ -1,34 +1,14 @@
 package top.ylonline.sb.redis.v2.cache;
 
-import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.cache.Cache;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.data.redis.cache.RedisCache;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
-import org.springframework.data.redis.serializer.RedisSerializationContext;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.util.ReflectionUtils;
-import top.ylonline.common.cache.annotation.Expired;
 import top.ylonline.common.cache.util.CacheUtils;
-import top.ylonline.common.util.StrUtils;
 
 import java.time.Duration;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -54,6 +34,13 @@ public class TRedisCacheManager extends RedisCacheManager {
 
     private final ConcurrentMap<String, Cache> cacheMap = new ConcurrentHashMap<>(16);
 
+    /**
+     * 该实现主要解决了 {@link top.ylonline.common.cache.interceptor.TCacheResolver} 中构建了新 cacheName，导致 CachePut、CacheEvict
+     * 等使用失效问题。
+     *
+     * @param name {@link top.ylonline.common.cache.interceptor.TCacheResolver} 中生成的新的 cacheName
+     * @return cache 实例
+     */
     @Override
     public Cache getCache(String name) {
         if (log.isDebugEnabled()) {
